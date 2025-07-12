@@ -1,99 +1,249 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>AZARA NFT Marketplace</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    // Smooth scroll
-    document.addEventListener("DOMContentLoaded", function () {
-      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener("click", function (e) {
-          e.preventDefault();
-          document.querySelector(this.getAttribute("href")).scrollIntoView({
-            behavior: "smooth"
-          });
-        });
-      });
-    });
 
-    // Modal interactivity
-    function toggleModal() {
-      document.getElementById("walletModal").classList.toggle("hidden");
-      document.getElementById("walletModal").classList.toggle("flex");
-    }
-  </script>
-</head>
-<body class="bg-gray-900 text-gray-200 scroll-smooth">
+<!-- NFT/Crypto Dashboard Section -->
+<script>
+  // Example dynamic data (could be fetched from an API)
+  const dashboardData = {
+    totalNFTs: 1245,
+    totalVolume: 3200,
+    activeTraders: 512
+  };
 
-  <!-- Navigation -->
-  <nav class="p-6 bg-gray-800 shadow-lg flex justify-between items-center">
-    <h1 class="text-purple-400 text-2xl font-bold">AZARA NFT</h1>
-    <a href="#dashboard" class="text-green-400 hover:text-green-300">Go to Dashboard</a>
-    <button onclick="toggleModal()" class="bg-purple-700 text-white px-4 py-2 rounded-md hover:bg-purple-600 transition">Connect Wallet</button>
-  </nav>
+  // Animate numbers
+  function animateValue(id, start, end, duration) {
+    const obj = document.getElementById(id);
+    let startTimestamp = null;
+    const step = (timestamp) => {
+      if (!startTimestamp) startTimestamp = timestamp;
+      const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+      obj.textContent = Math.floor(progress * (end - start) + start).toLocaleString();
+      if (progress < 1) {
+        window.requestAnimationFrame(step);
+      } else {
+        obj.textContent = end.toLocaleString();
+      }
+    };
+    window.requestAnimationFrame(step);
+  }
 
-  <!-- Connect Wallet Modal Popup -->
-  <div id="walletModal" class="fixed inset-0 hidden items-center justify-center bg-black bg-opacity-50 z-50 transition-opacity">
-    <div class="bg-gray-800 p-8 rounded-lg shadow-xl transform scale-95 animate-fade-in-up">
-      <h2 class="text-xl text-purple-300 font-bold mb-4">Choose a wallet provider</h2>
-      <ul class="space-y-3">
-        <li><button class="bg-purple-600 hover:bg-purple-500 px-4 py-2 rounded w-full">Metamask</button></li>
-        <li><button class="bg-purple-600 hover:bg-purple-500 px-4 py-2 rounded w-full">WalletConnect</button></li>
-        <li><button class="bg-purple-600 hover:bg-purple-500 px-4 py-2 rounded w-full">Coinbase Wallet</button></li>
-      </ul>
-      <button onclick="toggleModal()" class="mt-6 text-gray-400 hover:text-gray-300">Close</button>
+  document.addEventListener('DOMContentLoaded', () => {
+    animateValue('totalNFTs', 0, dashboardData.totalNFTs, 1200);
+    animateValue('totalVolume', 0, dashboardData.totalVolume, 1200);
+    animateValue('activeTraders', 0, dashboardData.activeTraders, 1200);
+  });
+</script>
+
+<section class="py-20 bg-gradient-to-br from-gray-900 via-black to-gray-800 fade-in-up" id="dashboard">
+  <div class="max-w-7xl mx-auto px-4">
+    <h2 class="text-3xl font-bold text-purple-300 mb-10">NFT & Crypto Dashboard</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mb-12">
+      <!-- Total NFTs -->
+      <div class="card bg-gray-800 shadow-lg p-8 flex flex-col items-center rounded-xl fade-in-up">
+        <div class="bg-purple-900 rounded-full p-4 mb-4">
+          <svg class="w-8 h-8 text-purple-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v18m9-9H3"/>
+          </svg>
+        </div>
+        <h4 class="text-lg font-semibold text-white-400 mb-1">Total NFTs</h4>
+        <span id="totalNFTs" class="text-2xl font-bold text-white-200">0</span>
+      </div>
+
+      <!-- Total Volume -->
+      <div class="card bg-gray-800 shadow-lg p-8 flex flex-col items-center rounded-xl fade-in-up" style="animation-delay:.1s;">
+        <div class="bg-blue-900 rounded-full p-4 mb-4">
+          <svg class="w-8 h-8 text-blue-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17 9V7a5 5 0 0 0-10 0v2M5 20h14a2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2z"/>
+          </svg>
+        </div>
+        <h4 class="text-lg font-semibold text-white-400 mb-1">Total Volume</h4>
+        <span id="totalVolume" class="text-2xl font-bold text-white-200">0</span> <span class="text-base text-white-400 ml-1">ETH</span>
+      </div>
+
+      <!-- Active Traders -->
+      <div class="card bg-gray-800 shadow-lg p-8 flex flex-col items-center rounded-xl fade-in-up" style="animation-delay:.2s;">
+        <div class="bg-green-900 rounded-full p-4 mb-4">
+          <svg class="w-8 h-8 text-green-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a4 4 0 0 0-3-3.87M9 20H4v-2a4 4 0 0 1 3-3.87M16 3.13a4 4 0 1 1 0 7.75M8 3.13a4 4 0 1 0 0 7.75"/>
+          </svg>
+        </div>
+        <h4 class="text-lg font-semibold text-white-400 mb-1">Active Traders</h4>
+        <span id="activeTraders" class="text-2xl font-bold text-white-200">0</span>
+      </div>
+    </div>
+
+    <section id="dashboard" class="py-20 bg-gradient-to-br from-gray-900 via-black to-gray-800">
+  <div class="max-w-7xl mx-auto px-4">
+    <h3 class="text-3xl font-bold text-purple-300 mb-10 text-center">Top NFTs & Crypto Prices</h3>
+
+    <div class="bg-gray-800 rounded-xl shadow-lg p-8 animate-fade-in-up">
+      <div class="overflow-x-auto mb-6">
+        <canvas id="nftCryptoChart" height="100"></canvas>
+      </div>
+
+      <table class="table-auto w-full text-gray-200">
+        <thead>
+          <tr class="border-b border-gray-700 text-sm uppercase text-gray-400">
+            <th class="text-left py-2">Name</th>
+            <th class="text-left">Type</th>
+            <th class="text-left">Price</th>
+            <th class="text-left">Change (24h)</th>
+            <th class="text-left">Ends In</th> <!-- Countdown column -->
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Ethereum</td>
+            <td>Crypto</td>
+            <td>$3,200</td>
+            <td class="text-green-400 font-semibold">+2.1%</td>
+            <td id="auctionEnds1" class="text-sm text-gray-300">...</td>
+          </tr>
+          <tr>
+            <td>Bitcoin</td>
+            <td>Crypto</td>
+            <td>$67,000</td>
+            <td class="text-red-400 font-semibold">-0.8%</td>
+            <td id="auctionEnds2" class="text-sm text-gray-300">...</td>
+          </tr>
+          <tr>
+            <td>Rose Nwogbo NFT</td>
+            <td>NFT</td>
+            <td>450 ETH</td>
+            <td class="text-green-400 font-semibold">+5.4%</td>
+            <td id="auctionEnds3" class="text-sm text-gray-300">...</td>
+          </tr>
+          <tr>
+            <td>Ai oriental nft</td>
+            <td>NFT</td>
+            <td>6.70 ETH</td>
+            <td class="text-green-400 font-semibold">+1.2%</td>
+            <td id="auctionEnds4" class="text-sm text-gray-300">...</td>
+          </tr>
+          <tr>
+            <td>Human Areology</td>
+            <td>NFT</td>
+            <td>100.02 ETH</td>
+            <td class="text-red-400 font-semibold">-0.5%</td>
+            <td id="auctionEnds5" class="text-sm text-gray-300">...</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
+</section>
 
-  <!-- Your Black-Themed Dashboard (from earlier) -->
-  <section class="py-20 bg-gradient-to-br from-gray-900 via-black to-gray-800 fade-in-up" id="dashboard">
-    <div class="max-w-7xl mx-auto px-4">
-      <h2 class="text-3xl font-bold text-purple-300 mb-10">NFT & Crypto Dashboard</h2>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mb-12">
-        <!-- Cards: Total NFTs / Volume / Traders -->
-        <!-- Same cards from your previous code go here -->
-      </div>
 
-      <!-- Chart & Table Section -->
-      <div class="bg-gray-800 rounded-xl shadow-lg p-8 fade-in-up">
-        <h3 class="text-xl font-bold text-purple-300 mb-6">Top NFTs & Crypto Prices</h3>
-        <div class="overflow-x-auto mb-4">
-          <canvas id="nftCryptoChart" height="100"></canvas>
-        </div>
-        <table class="table table-zebra w-full text-gray-300">
-          <thead>
-            <tr>
-              <th>Name</th><th>Type</th><th>Price</th><th>Change (24h)</th>
-            </tr>
-          </thead>
-          <tbody>
-            <!-- Your NFT rows here -->
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </section>
-
-  <!-- Tailwind Animate Utility -->
-  <style>
-    @keyframes fade-in-up {
-      0% {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      100% {
-        opacity: 1;
-        transform: translateY(0);
+<!-- Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  // 🔁 Real-Time Chart Update
+  const ctx = document.getElementById('nftCryptoChart').getContext('2d');
+  const chart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Ethereum', 'Bitcoin', 'Rose Nwogbo NFT', 'Ai oriental nft', 'Human Areology'],
+      datasets: [{
+        label: 'Price (USD/ETH)',
+        data: [3200, 67000, 450 * 3200, 6.7 * 3200, 100.02 * 3200],
+        backgroundColor: [
+          'rgba(168, 89, 255, 0.7)',
+          'rgba(59, 130, 246, 0.7)',
+          'rgba(34, 197, 94, 0.7)',
+          'rgba(59, 130, 246, 0.5)',
+          'rgba(168, 89, 255, 0.5)'
+        ],
+        borderColor: [
+          'rgba(168, 89, 255, 1)',
+          'rgba(59, 130, 246, 1)',
+          'rgba(34, 197, 94, 1)',
+          'rgba(59, 130, 246, 1)',
+          'rgba(168, 89, 255, 1)'
+        ],
+        borderWidth: 2
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+        tooltip: { enabled: true }
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: {
+            callback: value => '$' + value.toLocaleString()
+          }
+        }
       }
     }
+  });
 
-    .animate-fade-in-up {
-      animation: fade-in-up 0.5s ease-out forwards;
+  setInterval(() => {
+    chart.data.datasets[0].data = [
+      Math.floor(3000 + Math.random() * 300),
+      Math.floor(66000 + Math.random() * 1500),
+      450 * 3200,
+      6.7 * 3200 + Math.random() * 100,
+      100.02 * 3200 + Math.random() * 100
+    ];
+    chart.update();
+  }, 10000);
+
+  // 🔢 Animated Counters
+  function animateValue(id, start, end, duration) {
+    const obj = document.getElementById(id);
+    let startTime = null;
+    function step(timestamp) {
+      if (!startTime) startTime = timestamp;
+      const progress = timestamp - startTime;
+      const value = Math.floor(start + (end - start) * (progress / duration));
+      obj.innerText = progress < duration ? value : end;
+      if (progress < duration) requestAnimationFrame(step);
     }
-  </style>
+    requestAnimationFrame(step);
+  }
 
+  animateValue("totalNFTs", 0, 1245, 1500);
+  animateValue("totalVolume", 0, 3200, 1500);
+  animateValue("activeTraders", 0, 512, 1500);
 
-</body>
-</html>
+  // ⏱️ Countdown Timers
+  function countdown(id, hours, minutes, seconds) {
+    const endTime = new Date().getTime() + (hours * 3600 + minutes * 60 + seconds) * 1000;
+    setInterval(() => {
+      const now = new Date().getTime();
+      const remaining = endTime - now;
+      if (remaining <= 0) {
+        document.getElementById(id).innerText = "Expired";
+        return;
+      }
+      const h = Math.floor(remaining / (1000 * 60 * 60));
+      const m = Math.floor((remaining % (1000 * 60 * 60)) / (1000 * 60));
+      const s = Math.floor((remaining % (1000 * 60)) / 1000);
+      document.getElementById(id).innerText = `${h}h:${m}m:${s}s`;
+    }, 1000);
+  }
+
+  countdown("auctionEnds1", 7, 25, 46);
+  countdown("auctionEnds2", 6, 25, 46);
+  countdown("auctionEnds3", 9, 25, 46);
+  countdown("auctionEnds4", 5, 25, 46);
+  countdown("auctionEnds5", 5, 25, 46);
+
+  // 🧭 Mobile Menu Toggle
+  document.getElementById('menu-btn').onclick = () => {
+    document.getElementById('mobile-menu').classList.toggle('hidden');
+  };
+  document.querySelectorAll('#mobile-menu a').forEach(link => {
+    link.addEventListener('click', () => {
+      document.getElementById('mobile-menu').classList.add('hidden');
+    });
+  });
+
+  // 👛 Wallet Modal Toggle
+  function toggleModal() {
+    const modal = document.getElementById("walletModal");
+    modal.classList.toggle("hidden");
+    modal.classList.toggle("flex");
+  }
+</script>
