@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wallet | Azara NFT</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Manrope:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.10.2/dist/full.css" rel="stylesheet" type="text/css" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
+</head>
+<body class="bg-gradient-to-b from-white via-purple-50 to-white text-gray-900 min-h-screen font-sans flex flex-col">
+<!-- Navbar -->
+<nav class="navbar bg-black/70 shadow-lg sticky top-0 z-50 backdrop-blur-lg fade-in">
+  <div class="container mx-auto flex justify-between items-center py-2 px-2 md:px-0">
+    <div class="flex items-center gap-2">
+      <svg width="40" height="40" viewBox="0 0 44 44" fill="none"><circle cx="22" cy="22" r="22" fill="#A259FF"/><path d="M14 22C14 17.5817 17.5817 14 22 14C26.4183 14 30 17.5817 30 22C30 26.4183 26.4183 30 22 30C17.5817 30 14 26.4183 14 22Z" fill="white"/></svg>
+      <span class="text-xl md:text-2xl font-bold tracking-wide text-purple-700">AZARA NFT</span>
+    </div>
+    <div class="hidden md:flex gap-8 font-semibold text-base">
+      <a href="../views/index.html" class="hover:text-purple-300 transition">Home</a>
+      <a href="#market" class="hover:text-purple-300 transition">Market</a>
+      <a href="#collections" class="hover:text-purple-300 transition">Collections</a>
+      <a href="#trending" class="hover:text-purple-300 transition">Trending</a>
+      <a href="../views/wallet.html" class="hover:text-purple-300 transition">Wallet</a>
+    </div>
+    <div class="flex items-center gap-2">
+      <button class="btn btn-circle btn-ghost">
+        <svg class="w-6 h-6 text-purple-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M5.121 17.804A9 9 0 1 1 21 12.001M15 11a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+        </svg>
+      </button>
+      <a href="#wallet" class="btn btn-primary hidden md:inline-block px-5 py-2 text-base font-semibold">Connect</a>
+      <button class="btn btn-square btn-ghost md:hidden" id="menu-btn">
+        <svg class="w-7 h-7 text-purple-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+  <div id="mobile-menu" class="md:hidden hidden px-4 pb-4 fade-in-up">
+    <nav class="flex flex-col gap-2">
+      <a href="#" class="btn btn-ghost btn-sm rounded-btn">Home</a>
+      <a href="#market" class="btn btn-ghost btn-sm rounded-btn">Market</a>
+      <a href="#collections" class="btn btn-ghost btn-sm rounded-btn">Collections</a>
+      <a href="#trending" class="btn btn-ghost btn-sm rounded-btn">Trending</a>
+      <a href="../views/wallet.html" class="btn btn-ghost btn-sm rounded-btn">Wallet</a>
+    </nav>
+  </div>
+  <script>
+    document.getElementById('menu-btn').onclick = () =>
+      document.getElementById('mobile-menu').classList.toggle('hidden');
+  </script>
+</nav>
+    <!-- 🎨 NFT Image Left Side -->
+    <div class="relative h-full">
+      <div class="absolute inset-0 bg-purple-100 opacity-30 z-0"></div>
+      <div class="relative z-10 flex justify-center items-center p-8">
+        <img src="../image/Keemun psychodelic mushrooms microcosmos noisy background 4k.png" alt="NFT Showcase" class="rounded-lg shadow-md w-full max-w-md" />
+      </div>
+    </div>
+
+    <!-- 💼 Wallet Connect Right Side -->
+    <div class="text-center lg:text-left p-8">
+      <h2 class="text-4xl font-extrabold mb-4 text-purple-800">Connect Your Wallet</h2>
+      <p class="text-gray-600 mb-8">Choose your preferred wallet provider to manage your digital assets.</p>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+        <button id="metamask-btn" class="border border-purple-300 rounded-xl p-6 shadow hover:shadow-lg transition bg-white hover:bg-purple-50 flex flex-col items-center">
+          <img src="https://cdn.animaapp.com/projects/63aaf7e2426e9824f0350c11/releases/63aaf8f2426e9824f0350c13/img/metamask@2x.svg" alt="Metamask" class="w-10 mb-2" />
+          <span class="text-purple-700 font-medium">Metamask</span>
+        </button>
+
+        <button id="walletconnect-btn" class="border border-blue-300 rounded-xl p-6 shadow hover:shadow-lg transition bg-white hover:bg-blue-50 flex flex-col items-center">
+          <img src="https://cdn.animaapp.com/projects/63aaf7e2426e9824f0350c11/releases/63aaf8f2426e9824f0350c13/img/walletconnect@2x.svg" alt="WalletConnect" class="w-10 mb-2" />
+          <span class="text-blue-700 font-medium">Wallet Connect</span>
+        </button>
+
+        <button id="coinbase-btn" class="border border-yellow-300 rounded-xl p-6 shadow hover:shadow-lg transition bg-white hover:bg-yellow-50 flex flex-col items-center">
+          <img src="https://cdn.animaapp.com/projects/63aaf7e2426e9824f0350c11/releases/63aaf8f2426e9824f0350c13/img/coinbase@2x.svg" alt="Coinbase" class="w-10 mb-2" />
+          <span class="text-yellow-700 font-medium">Coinbase</span>
+        </button>
+      </div>
+
+      <div id="wallet-info" class="mt-8 hidden">
+        <h3 class="text-lg font-semibold text-purple-600 mb-2">Wallet Address:</h3>
+        <p id="wallet-address" class="text-sm text-gray-700 break-words"></p>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- Footer -->
+<footer class="bg-gradient-to-r from-purple-800 to-blue-800 text-white pt-12 pb-8 mt-16 fade-in">
+  <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row md:justify-between md:items-start gap-10">
+    <div class="mb-8 md:mb-0 flex-1">
+      <div class="flex items-center mb-4">
+        <svg width="40" height="40" viewBox="0 0 44 44" fill="none" class="mr-3">
+          <circle cx="22" cy="22" r="22" fill="#A259FF"/>
+          <path d="M14 22C14 17.5817 17.5817 14 22 14C26.4183 14 30 17.5817 30 22C30 26.4183 26.4183 30 22 30C17.5817 30 14 26.4183 14 22Z" fill="white"/>
+        </svg>
+        <span class="text-xl font-bold tracking-wide">AZARA NFT</span>
+      </div>
+      <p class="text-gray-300 max-w-xs">Discover, collect, and sell extraordinary NFTs. The leading NFT Marketplace for blockchain digital assets.</p>
+    </div>
+    <div class="mb-8 md:mb-0 flex-1">
+      <h5 class="font-semibold mb-4 text-lg">Marketplace</h5>
+      <ul class="space-y-2 text-gray-200">
+        <li><a href="#" class="hover:text-purple-300 transition">Home</a></li>
+        <li><a href="#market" class="hover:text-purple-300 transition">Market</a></li>
+        <li><a href="#collections" class="hover:text-purple-300 transition">Collections</a></li>
+        <li><a href="#trending" class="hover:text-purple-300 transition">Trending</a></li>
+        <li><a href="#wallet" class="hover:text-purple-300 transition">Wallet</a></li>
+      </ul>
+    </div>
+    <div class="mb-8 md:mb-0 flex-1">
+      <h5 class="font-semibold mb-4 text-lg">Resources</h5>
+      <ul class="space-y-2 text-gray-200">
+        <li><a href="#" class="hover:text-purple-300 transition">Help Center</a></li>
+        <li><a href="#" class="hover:text-purple-300 transition">Blog</a></li>
+        <li><a href="#" class="hover:text-purple-300 transition">Partners</a></li>
+        <li><a href="#" class="hover:text-purple-300 transition">About Us</a></li>
+      </ul>
+    </div>
+    <div class="flex-1">
+      <h5 class="font-semibold mb-4 text-lg">Stay Updated</h5>
+      <form class="flex mb-5">
+        <input type="email" placeholder="Your email address" class="input input-bordered rounded-l-lg px-4 py-2 w-full text-gray-800 focus:outline-none" required>
+        <button type="submit" class="btn btn-primary rounded-r-lg font-semibold transition">Subscribe</button>
+      </form>
+      <div class="flex space-x-4 mt-2">
+        <a href="https://www.facebook.com" target="_blank" class="hover:text-blue-400 transition"><i class="fab fa-facebook-square fa-lg"></i></a>
+        <a href="https://opensea.io" target="_blank" class="hover:text-blue-300 transition"><i class="fab fa-opensea fa-lg"></i></a>
+        <a href="https://www.youtube.com" target="_blank" class="hover:text-red-400 transition"><i class="fab fa-youtube fa-lg"></i></a>
+        <a href="https://wa.me/" target="_blank" class="hover:text-green-400 transition"><i class="fab fa-whatsapp fa-lg"></i></a>
+        <a href="https://www.instagram.com" target="_blank" class="hover:text-pink-400 transition"><i class="fab fa-instagram fa-lg"></i></a>
+      </div>
+    </div>
+  </div>
+  <div class="border-t border-purple-700 mt-10 pt-6 text-center text-sm text-gray-400">
+    © 2025 AZARA NFT MARKETPLACE. All rights reserved.
+  </div>
+</footer>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+   

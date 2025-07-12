@@ -1,0 +1,30 @@
+{
+  "name": "nft-marketplace-app",
+  "version": "1.0.0",
+  "description": "A decentralized NFT marketplace application.",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.10.9",
+    "dotenv": "^8.2.0",
+    "cors": "^2.8.5",
+    "body-parser": "^1.19.0",
+    "web3": "^1.5.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  },
+  "keywords": [
+    "NFT",
+    "Marketplace",
+    "Blockchain",
+    "Web3"
+  ],
+  "author": "Your Name",
+  "license": "MIT"
+}
