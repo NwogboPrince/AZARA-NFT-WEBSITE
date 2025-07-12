@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AZARA NFT Marketplace</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    // Smooth scroll
+    document.addEventListener("DOMContentLoaded", function () {
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          document.querySelector(this.getAttribute("href")).scrollIntoView({
+            behavior: "smooth"
+          });
+        });
+      });
+    });
+
+    // Modal interactivity
+    function toggleModal() {
+      document.getElementById("walletModal").classList.toggle("hidden");
+      document.getElementById("walletModal").classList.toggle("flex");
+    }
+  </script>
+</head>
+<body class="bg-gray-900 text-gray-200 scroll-smooth">
+
+  <!-- Navigation -->
+  <nav class="p-6 bg-gray-800 shadow-lg flex justify-between items-center">
+    <h1 class="text-purple-400 text-2xl font-bold">AZARA NFT</h1>
+    <a href="#dashboard" class="text-green-400 hover:text-green-300">Go to Dashboard</a>
+    <button onclick="toggleModal()" class="bg-purple-700 text-white px-4 py-2 rounded-md hover:bg-purple-600 transition">Connect Wallet</button>
+  </nav>
+
+  <!-- Connect Wallet Modal Popup -->
+  <div id="walletModal" class="fixed inset-0 hidden items-center justify-center bg-black bg-opacity-50 z-50 transition-opacity">
+    <div class="bg-gray-800 p-8 rounded-lg shadow-xl transform scale-95 animate-fade-in-up">
+      <h2 class="text-xl text-purple-300 font-bold mb-4">Choose a wallet provider</h2>
+      <ul class="space-y-3">
+        <li><button class="bg-purple-600 hover:bg-purple-500 px-4 py-2 rounded w-full">Metamask</button></li>
+        <li><button class="bg-purple-600 hover:bg-purple-500 px-4 py-2 rounded w-full">WalletConnect</button></li>
+        <li><button class="bg-purple-600 hover:bg-purple-500 px-4 py-2 rounded w-full">Coinbase Wallet</button></li>
+      </ul>
+      <button onclick="toggleModal()" class="mt-6 text-gray-400 hover:text-gray-300">Close</button>
+    </div>
+  </div>
+
+  <!-- Your Black-Themed Dashboard (from earlier) -->
+  <section class="py-20 bg-gradient-to-br from-gray-900 via-black to-gray-800 fade-in-up" id="dashboard">
+    <div class="max-w-7xl mx-auto px-4">
+      <h2 class="text-3xl font-bold text-purple-300 mb-10">NFT & Crypto Dashboard</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mb-12">
+        <!-- Cards: Total NFTs / Volume / Traders -->
+        <!-- Same cards from your previous code go here -->
+      </div>
+
+      <!-- Chart & Table Section -->
+      <div class="bg-gray-800 rounded-xl shadow-lg p-8 fade-in-up">
+        <h3 class="text-xl font-bold text-purple-300 mb-6">Top NFTs & Crypto Prices</h3>
+        <div class="overflow-x-auto mb-4">
+          <canvas id="nftCryptoChart" height="100"></canvas>
+        </div>
+        <table class="table table-zebra w-full text-gray-300">
+          <thead>
+            <tr>
+              <th>Name</th><th>Type</th><th>Price</th><th>Change (24h)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Your NFT rows here -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tailwind Animate Utility -->
+  <style>
+    @keyframes fade-in-up {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-fade-in-up {
+      animation: fade-in-up 0.5s ease-out forwards;
+    }
+  </style>
+
+
+</body>
+</html>

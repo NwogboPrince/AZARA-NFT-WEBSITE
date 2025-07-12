@@ -11,6 +11,25 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
   <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
+  <script>
+    // Smooth scroll
+    document.addEventListener("DOMContentLoaded", function () {
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          document.querySelector(this.getAttribute("href")).scrollIntoView({
+            behavior: "smooth"
+          });
+        });
+      });
+    });
+
+    // Modal interactivity
+    function toggleModal() {
+      document.getElementById("walletModal").classList.toggle("hidden");
+      document.getElementById("walletModal").classList.toggle("flex");
+    }
+  </script>
   <style>
     html { font-size: 18px; }
     body { font-family: 'Manrope', 'Inter', sans-serif; }
@@ -34,18 +53,23 @@
       to { opacity: 1;}
     }
   </style>  
-
 </head>
 <body class="bg-gradient-to-br from-gray-900 via-black to-gray-800 min-h-screen text-gray-100">
 
-
-<!-- Navbar -->
+  <!-- Navbar -->
 <nav class="navbar bg-black/70 shadow-lg sticky top-0 z-50 backdrop-blur-lg fade-in">
-  <div class="container mx-auto flex justify-between items-center py-2 px-2 md:px-0">
+  <div class="container mx-auto flex justify-between items-center py-2 px-4 md:px-0">
+
+    <!-- Logo -->
     <div class="flex items-center gap-2">
-      <svg width="40" height="40" viewBox="0 0 44 44" fill="none"><circle cx="22" cy="22" r="22" fill="#A259FF"/><path d="M14 22C14 17.5817 17.5817 14 22 14C26.4183 14 30 17.5817 30 22C30 26.4183 26.4183 30 22 30C17.5817 30 14 26.4183 14 22Z" fill="white"/></svg>
+      <svg width="40" height="40" viewBox="0 0 44 44" fill="none">
+        <circle cx="22" cy="22" r="22" fill="#A259FF"/>
+        <path d="M14 22C14 17.5817 17.5817 14 22 14C26.4183 14 30 17.5817 30 22C30 26.4183 26.4183 30 22 30C17.5817 30 14 26.4183 14 22Z" fill="white"/>
+      </svg>
       <span class="text-xl md:text-2xl font-bold tracking-wide text-purple-700">AZARA NFT</span>
     </div>
+
+    <!-- Desktop Navigation -->
     <div class="hidden md:flex gap-8 font-semibold text-base">
       <a href="#" class="hover:text-purple-300 transition">Home</a>
       <a href="#market" class="hover:text-purple-300 transition">Market</a>
@@ -53,22 +77,35 @@
       <a href="#trending" class="hover:text-purple-300 transition">Trending</a>
       <a href="../views/wallet.html" class="hover:text-purple-300 transition">Wallet</a>
     </div>
+
+    <!-- Controls -->
     <div class="flex items-center gap-2">
-      <button class="btn btn-circle btn-ghost">
-        <svg class="w-6 h-6 text-purple-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M5.121 17.804A9 9 0 1 1 21 12.001M15 11a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-        </svg>
-      </button>
-      <a href="#wallet" class="btn btn-primary hidden md:inline-block px-5 py-2 text-base font-semibold">Connect</a>
-      <button class="btn btn-square btn-ghost md:hidden" id="menu-btn">
-        <svg class="w-7 h-7 text-purple-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <!-- Mobile Menu Toggle -->
+      <button id="menu-btn" class="md:hidden btn btn-circle btn-ghost">
+        <svg class="w-6 h-6 text-purple-700" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+          stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
         </svg>
       </button>
+
+      <!-- Profile Icon (Desktop only) -->
+      <button class="btn btn-circle btn-ghost hidden md:inline-block">
+        <svg class="w-6 h-6 text-purple-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M5.121 17.804A9 9 0 1 1 21 12.001M15 11a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+        </svg>
+      </button>
+
+      <!-- Connect Wallet -->
+      <button onclick="toggleModal()" class="bg-purple-700 text-white px-4 py-2 rounded-md hover:bg-purple-600 transition">
+        Connect Wallet
+      </button>
     </div>
   </div>
+
+  <!-- Mobile Menu -->
   <div id="mobile-menu" class="md:hidden hidden px-4 pb-4 fade-in-up">
-    <nav class="flex flex-col gap-2">
+    <nav class="flex flex-col gap-2 mt-4">
       <a href="#" class="btn btn-ghost btn-sm rounded-btn">Home</a>
       <a href="#market" class="btn btn-ghost btn-sm rounded-btn">Market</a>
       <a href="#collections" class="btn btn-ghost btn-sm rounded-btn">Collections</a>
@@ -76,11 +113,89 @@
       <a href="../views/wallet.html" class="btn btn-ghost btn-sm rounded-btn">Wallet</a>
     </nav>
   </div>
+</nav>
+<!-- Connect Wallet Modal -->
+<div id="walletModal" class="fixed inset-0 hidden items-center justify-center bg-black bg-opacity-50 z-50 transition-opacity">
+  <div class="bg-gray-900 p-6 rounded-2xl shadow-2xl transform scale-95 animate-fade-in-up w-full max-w-md mx-auto">
+    <h2 class="text-2xl font-bold text-purple-300 mb-6 text-center">Choose a wallet provider</h2>
+    
+    <ul class="space-y-4">
+      <li>
+        <button class="w-full flex items-center gap-3 px-5 py-3 rounded-lg border border-purple-500 bg-purple-800 hover:bg-purple-700 transition">
+          <img src="https://cdn.animaapp.com/projects/63aaf7e2426e9824f0350c11/releases/63aaf8f2426e9824f0350c13/img/metamask@2x.svg"
+               alt="Metamask" class="w-7 h-7" />
+          <span class="text-white text-base font-medium">Metamask</span>
+        </button>
+      </li>
+
+      <li>
+        <button class="w-full flex items-center gap-3 px-5 py-3 rounded-lg border border-blue-500 bg-blue-800 hover:bg-blue-700 transition">
+          <img src="https://cdn.animaapp.com/projects/63aaf7e2426e9824f0350c11/releases/63aaf8f2426e9824f0350c13/img/walletconnect@2x.svg"
+               alt="WalletConnect" class="w-7 h-7" />
+          <span class="text-white text-base font-medium">Wallet Connect</span>
+        </button>
+      </li>
+
+      <li>
+        <button class="w-full flex items-center gap-3 px-5 py-3 rounded-lg border border-yellow-500 bg-yellow-800 hover:bg-yellow-700 transition">
+          <img src="https://cdn.animaapp.com/projects/63aaf7e2426e9824f0350c11/releases/63aaf8f2426e9824f0350c13/img/coinbase@2x.svg"
+               alt="Coinbase" class="w-7 h-7" />
+          <span class="text-yellow-300 text-base font-medium">Coinbase</span>
+        </button>
+      </li>
+    </ul>
+
+    <button onclick="toggleModal()" class="mt-6 w-full text-center text-gray-400 hover:text-white transition text-sm">
+      Close
+    </button>
+  </div>
+</div>
+
+<script>
+  // Toggle Wallet Modal
+function toggleModal() {
+  const modal = document.getElementById("walletModal");
+  modal.classList.toggle("hidden");
+  modal.classList.toggle("flex");
+}
+
+// Toggle Mobile Menu
+document.getElementById('menu-btn').onclick = () => {
+  document.getElementById('mobile-menu').classList.toggle('hidden');
+};
+
+// Optional: Hide menu when clicking a mobile link
+document.querySelectorAll('#mobile-menu a').forEach(link => {
+  link.addEventListener('click', () => {
+    document.getElementById('mobile-menu').classList.add('hidden');
+  });
+});
+
+</script>  
+<!-- Tailwind Animate Utility -->
+  <style>
+    @keyframes fade-in-up {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-fade-in-up {
+      animation: fade-in-up 0.5s ease-out forwards;
+    }
+  </style>
+  
   <script>
     document.getElementById('menu-btn').onclick = () =>
       document.getElementById('mobile-menu').classList.toggle('hidden');
   </script>
 </nav>
+
 <!-- Hero Section -->
 <section class="pt-24 pb-20 bg-gradient-to-br from-gray-900 via-black to-gray-800 fade-in-up" id="home">
   <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center gap-16">
@@ -385,49 +500,53 @@
     animateValue('activeTraders', 0, dashboardData.activeTraders, 1200);
   });
 </script>
-<section class="py-20 bg-gradient-to-br from-blue-50 via-white to-purple-50 fade-in-up" id="dashboard">
+
+<section class="py-20 bg-gradient-to-br from-gray-900 via-black to-gray-800 fade-in-up" id="dashboard">
   <div class="max-w-7xl mx-auto px-4">
-    <h2 class="text-3xl font-bold text-purple-800 mb-10">NFT & Crypto Dashboard</h2>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mb-12">yy
+    <h2 class="text-3xl font-bold text-purple-300 mb-10">NFT & Crypto Dashboard</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mb-12">
       <!-- Total NFTs -->
-      <div class="card bg-white/90 shadow-lg p-8 flex flex-col items-center glass fade-in-up">
-        <div class="bg-purple-100 rounded-full p-4 mb-4">
-          <svg class="w-8 h-8 text-purple-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <div class="card bg-gray-800 shadow-lg p-8 flex flex-col items-center rounded-xl fade-in-up">
+        <div class="bg-purple-900 rounded-full p-4 mb-4">
+          <svg class="w-8 h-8 text-purple-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v18m9-9H3"/>
           </svg>
         </div>
-        <h4 class="text-lg font-semibold text-purple-700 mb-1">Total NFTs</h4>
-        <span id="totalNFTs" class="text-2xl font-bold text-purple-900">0</span>
+        <h4 class="text-lg font-semibold text-white-400 mb-1">Total NFTs</h4>
+        <span id="totalNFTs" class="text-2xl font-bold text-white-200">0</span>
       </div>
+
       <!-- Total Volume -->
-      <div class="card bg-white/90 shadow-lg p-8 flex flex-col items-center glass fade-in-up" style="animation-delay:.1s;">
-        <div class="bg-blue-100 rounded-full p-4 mb-4">
-          <svg class="w-8 h-8 text-blue-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <div class="card bg-gray-800 shadow-lg p-8 flex flex-col items-center rounded-xl fade-in-up" style="animation-delay:.1s;">
+        <div class="bg-blue-900 rounded-full p-4 mb-4">
+          <svg class="w-8 h-8 text-blue-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M17 9V7a5 5 0 0 0-10 0v2M5 20h14a2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2z"/>
           </svg>
         </div>
-        <h4 class="text-lg font-semibold text-blue-700 mb-1">Total Volume</h4>
-        <span id="totalVolume" class="text-2xl font-bold text-blue-900">0</span> <span class="text-base text-blue-700 ml-1">ETH</span>
+        <h4 class="text-lg font-semibold text-white-400 mb-1">Total Volume</h4>
+        <span id="totalVolume" class="text-2xl font-bold text-white-200">0</span> <span class="text-base text-white-400 ml-1">ETH</span>
       </div>
+
       <!-- Active Traders -->
-      <div class="card bg-white/90 shadow-lg p-8 flex flex-col items-center glass fade-in-up" style="animation-delay:.2s;">
-        <div class="bg-green-100 rounded-full p-4 mb-4">
-          <svg class="w-8 h-8 text-green-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <div class="card bg-gray-800 shadow-lg p-8 flex flex-col items-center rounded-xl fade-in-up" style="animation-delay:.2s;">
+        <div class="bg-green-900 rounded-full p-4 mb-4">
+          <svg class="w-8 h-8 text-green-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a4 4 0 0 0-3-3.87M9 20H4v-2a4 4 0 0 1 3-3.87M16 3.13a4 4 0 1 1 0 7.75M8 3.13a4 4 0 1 0 0 7.75"/>
           </svg>
         </div>
-        <h4 class="text-lg font-semibold text-green-700 mb-1">Active Traders</h4>
-        <span id="activeTraders" class="text-2xl font-bold text-green-900">0</span>
+        <h4 class="text-lg font-semibold text-white-400 mb-1">Active Traders</h4>
+        <span id="activeTraders" class="text-2xl font-bold text-white-200">0</span>
       </div>
     </div>
+
     <!-- Chart Section -->
-    <div class="bg-white/90 rounded-xl shadow-lg p-8 glass fade-in-up">
-      <h3 class="text-xl font-bold text-purple-800 mb-6">Top NFTs & Crypto Prices</h3>
+    <div class="bg-gray-800 rounded-xl shadow-lg p-8 fade-in-up">
+      <h3 class="text-xl font-bold text-white-300 mb-6">Top NFTs & Crypto Prices</h3>
       <div class="overflow-x-auto">
         <canvas id="nftCryptoChart" height="100"></canvas>
       </div>
       <div class="mt-6">
-        <table class="table table-zebra w-full">
+        <table class="table table-zebra w-full text-white-300">
           <thead>
             <tr>
               <th class="text-left">Name</th>
@@ -437,55 +556,14 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td class="flex items-center gap-2 py-2">
-                <span class="flex items-center gap-2">
-                  <img src="https://images.pexels.com/photos/14911423/pexels-photo-14911423.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" class="w-6 h-6" alt="ETH" />
-                  Ethereum
-                </span>
-              </td>
-              <td>Crypto</td>
-              <td>3,200 USD</td>
-              <td class="text-green-600 font-semibold">+2.1%</td>
-            </tr>
-            <tr>
-              <td class="flex items-center gap-2 py-2">
-                <img src="https://img.capital.com/imgs/articles/1200x627x1/shutterstock_1318372334.jpg" class="w-6 h-6" alt="BTC" width="24" height="24" loading="lazy" /> Bitcoin
-              </td>
-              <td>Crypto</td>
-              <td>67,000 USD</td>
-              <td class="text-red-600 font-semibold">-0.8%</td>
-            </tr>
-            <tr>
-              <td class="flex items-center gap-2 py-2">
-                <img src="https://yudiz.com/codepen/nft-store/user-pic1.svg" class="w-6 h-6 rounded-full" alt="NFT"> Rose Nwogbo NFT
-              </td>
-              <td>NFT</td>
-              <td>450 ETH</td>
-              <td class="text-green-600 font-semibold">+5.4%</td>
-            </tr>
-            <tr>
-              <td class="flex items-center gap-2 py-2">
-                <img src="../image/hightech-helmets-humanoid-being-generative-ai.jpg" class="w-6 h-6 rounded-full" alt="NFT"> Ai oriental nft
-              </td>
-              <td>NFT</td>
-              <td>6.70 ETH</td>
-              <td class="text-green-600 font-semibold">+1.2%</td>
-            </tr>
-            <tr>
-              <td class="flex items-center gap-2 py-2">
-                <img src="./image/194d64e58e571.png" class="w-6 h-6 rounded-full" alt="NFT"> Human Areology
-              </td>
-              <td>NFT</td>
-              <td>100.02 ETH</td>
-              <td class="text-red-600 font-semibold">-0.5%</td>
-            </tr>
+            <!-- You can keep your dynamic NFT rows here -->
           </tbody>
         </table>
       </div>
     </div>
   </div>
-</section></svg>
+</section>
+
 <!-- Chart.js CDN -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
