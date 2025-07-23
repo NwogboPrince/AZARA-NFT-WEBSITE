@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>NEXT-LINE NFT Marketplace</title>
+  <title> NFTVerse Marketplace</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Manrope:wght@400;700&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/daisyui@4.10.2/dist/full.css" rel="stylesheet" type="text/css" />
@@ -22,7 +22,7 @@
           });
         });
       });
-    });
+    });   
 
     // Modal interactivity
     function toggleModal() {
@@ -55,8 +55,7 @@
   </style>  
 </head>
 <body class="bg-gradient-to-br from-gray-900 via-black to-gray-800 min-h-screen text-gray-100">
-
-  <!-- Navbar -->
+<!-- Navbar -->
 <nav class="navbar bg-black/70 shadow-lg sticky top-0 z-50 backdrop-blur-lg fade-in">
   <div class="container mx-auto flex justify-between items-center py-2 px-4 md:px-0">
 
@@ -66,7 +65,7 @@
         <circle cx="22" cy="22" r="22" fill="#A259FF"/>
         <path d="M14 22C14 17.5817 17.5817 14 22 14C26.4183 14 30 17.5817 30 22C30 26.4183 26.4183 30 22 30C17.5817 30 14 26.4183 14 22Z" fill="white"/>
       </svg>
-      <span class="text-xl md:text-2xl font-bold tracking-wide text-purple-700">AZARA NFT</span>
+      <span class="text-xl md:text-2xl font-bold tracking-wide text-purple-700">AZARA NFTVerse</span>
     </div>
 
     <!-- Desktop Navigation -->
@@ -81,7 +80,7 @@
     <!-- Controls -->
     <div class="flex items-center gap-2">
       <!-- Mobile Menu Toggle -->
-      <button id="menu-btn" class="md:hidden btn btn-circle btn-ghost">
+      <button id="menu-btn" class="md:hidden btn btn-circle btn-ghost" aria-label="Open menu">
         <svg class="w-6 h-6 text-purple-700" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
           stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
@@ -104,96 +103,45 @@
   </div>
 
   <!-- Mobile Menu -->
-  <div id="mobile-menu" class="md:hidden hidden px-4 pb-4 fade-in-up">
+  <div id="mobile-menu" class="md:hidden hidden px-4 pb-4 fade-in-up absolute top-full left-0 w-full bg-black/90 backdrop-blur-lg z-40">
     <nav class="flex flex-col gap-2 mt-4">
       <a href="#" class="btn btn-ghost btn-sm rounded-btn">Home</a>
       <a href="../views/market.html" class="btn btn-ghost btn-sm rounded-btn">Market</a>
       <a href="#collections" class="btn btn-ghost btn-sm rounded-btn">Collections</a>
-      <a href="./trending.html" class="btn btn-ghost btn-sm rounded-btn">Trending</a>
+      <a href="#trending" class="btn btn-ghost btn-sm rounded-btn">Trending</a>
       <a href="../views/wallet.html" class="btn btn-ghost btn-sm rounded-btn">Wallet</a>
     </nav>
   </div>
 </nav>
-<!-- Connect Wallet Modal -->
-<div id="walletModal" class="fixed inset-0 hidden items-center justify-center bg-black bg-opacity-50 z-50 transition-opacity">
-  <div class="bg-gray-900 p-6 rounded-2xl shadow-2xl transform scale-95 animate-fade-in-up w-full max-w-md mx-auto">
-    <h2 class="text-2xl font-bold text-purple-300 mb-6 text-center">Choose a wallet provider</h2>
-    
-    <ul class="space-y-4">
-      <li>
-        <button class="w-full flex items-center gap-3 px-5 py-3 rounded-lg border border-purple-500 bg-purple-800 hover:bg-purple-700 transition">
-          <img src="https://cdn.animaapp.com/projects/63aaf7e2426e9824f0350c11/releases/63aaf8f2426e9824f0350c13/img/metamask@2x.svg"
-               alt="Metamask" class="w-7 h-7" />
-          <span class="text-white text-base font-medium">Metamask</span>
-        </button>
-      </li>
-
-      <li>
-        <button class="w-full flex items-center gap-3 px-5 py-3 rounded-lg border border-blue-500 bg-blue-800 hover:bg-blue-700 transition">
-          <img src="https://cdn.animaapp.com/projects/63aaf7e2426e9824f0350c11/releases/63aaf8f2426e9824f0350c13/img/walletconnect@2x.svg"
-               alt="WalletConnect" class="w-7 h-7" />
-          <span class="text-white text-base font-medium">Wallet Connect</span>
-        </button>
-      </li>
-
-      <li>
-        <button class="w-full flex items-center gap-3 px-5 py-3 rounded-lg border border-yellow-500 bg-yellow-800 hover:bg-yellow-700 transition">
-          <img src="https://cdn.animaapp.com/projects/63aaf7e2426e9824f0350c11/releases/63aaf8f2426e9824f0350c13/img/coinbase@2x.svg"
-               alt="Coinbase" class="w-7 h-7" />
-          <span class="text-yellow-300 text-base font-medium">Coinbase</span>
-        </button>
-      </li>
-    </ul>
-
-    <button onclick="toggleModal()" class="mt-6 w-full text-center text-gray-400 hover:text-white transition text-sm">
-      Close
-    </button>
-  </div>
-</div>
-
 <script>
   // Toggle Wallet Modal
-function toggleModal() {
-  const modal = document.getElementById("walletModal");
-  modal.classList.toggle("hidden");
-  modal.classList.toggle("flex");
-}
+  function toggleModal() {
+    const modal = document.getElementById("walletModal");
+    modal.classList.toggle("hidden");
+    modal.classList.toggle("flex");
+  }
 
-// Toggle Mobile Menu
-document.getElementById('menu-btn').onclick = () => {
-  document.getElementById('mobile-menu').classList.toggle('hidden');
-};
+  // Toggle Mobile Menu
+  document.getElementById('menu-btn').onclick = () => {
+    document.getElementById('mobile-menu').classList.toggle('hidden');
+  };
 
-// Optional: Hide menu when clicking a mobile link
-document.querySelectorAll('#mobile-menu a').forEach(link => {
-  link.addEventListener('click', () => {
-    document.getElementById('mobile-menu').classList.add('hidden');
+  // Hide menu when clicking a mobile link
+  document.querySelectorAll('#mobile-menu a').forEach(link => {
+    link.addEventListener('click', () => {
+      document.getElementById('mobile-menu').classList.add('hidden');
+    });
   });
-});
 
-</script>  
-<!-- Tailwind Animate Utility -->
-  <style>
-    @keyframes fade-in-up {
-      0% {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      100% {
-        opacity: 1;
-        transform: translateY(0);
-      }
+  // Optional: Close mobile menu when clicking outside
+  document.addEventListener('click', function(e) {
+    const menu = document.getElementById('mobile-menu');
+    const btn = document.getElementById('menu-btn');
+    if (!menu.contains(e.target) && !btn.contains(e.target) && !menu.classList.contains('hidden')) {
+      menu.classList.add('hidden');
     }
-
-    .animate-fade-in-up {
-      animation: fade-in-up 0.5s ease-out forwards;
-    }
-  </style>
-  
-  <script>
-    document.getElementById('menu-btn').onclick = () =>
-      document.getElementById('mobile-menu').classList.toggle('hidden');
-  </script>
+  });
+</script>
 </nav>
 
 <!-- Hero Section -->
@@ -507,11 +455,11 @@ document.querySelectorAll('#mobile-menu a').forEach(link => {
     <div class="animate-fade-in-up" style="animation-delay: 0.1s">
       <h5 class="font-semibold mb-4 text-base text-purple-300">Marketplace</h5>
       <ul class="space-y-2 text-gray-300">
-        <li><a href="#" class="hover:text-purple-400 transition duration-300">Home</a></li>
-        <li><a href="#market" class="hover:text-purple-400 transition duration-300">Market</a></li>
-        <li><a href="#collections" class="hover:text-purple-400 transition duration-300">Collections</a></li>
-        <li><a href="#trending" class="hover:text-purple-400 transition duration-300">Trending</a></li>
-        <li><a href="#wallet" class="hover:text-purple-400 transition duration-300">Wallet</a></li>
+        <li><a href="../views/index.html" class="hover:text-purple-400 transition duration-300">Home</a></li>
+        <li><a href="../views/market.html" class="hover:text-purple-400 transition duration-300">Market</a></li>
+        <li><a href="../views/collections.html" class="hover:text-purple-400 transition duration-300">Collections</a></li>
+        <li><a href="../views/trending.html" class="hover:text-purple-400 transition duration-300">Trending</a></li>
+        <li><a href="../views/wallet.html" class="hover:text-purple-400 transition duration-300">Wallet</a></li>
       </ul>
     </div>
 
