@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="luxury">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Trending NFTs - NFT Marketplace</title>
+  <!-- Tailwind + DaisyUI + Flowbite CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.4.0/dist/full.css" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/flowbite@2.3.0/dist/flowbite.min.js"></script>
+</head>
+  <script>
+    // Smooth scroll
+    document.addEventListener("DOMContentLoaded", function () {
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          document.querySelector(this.getAttribute("href")).scrollIntoView({
+            behavior: "smooth"
+          });
+        });
+      });
+    });
+
+    // Modal interactivity
+    function toggleModal() {
+      document.getElementById("walletModal").classList.toggle("hidden");
+      document.getElementById("walletModal").classList.toggle("flex");
+    }
+  </script>
+  <style>
+    html { font-size: 18px; }
+    body { font-family: 'Manrope', 'Inter', sans-serif; }
+    .glass {
+      background: rgba(255,255,255,0.8);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 8px 32px rgba(80,0,120,0.10);
+    }
+    .fade-in-up {
+      animation: fadeInUp 1s cubic-bezier(.39,.575,.565,1.000) both;
+    }
+    @keyframes fadeInUp {
+      0% { opacity: 0; transform: translateY(40px);}
+      100% { opacity: 1; transform: translateY(0);}
+    }
+    .fade-in {
+      animation: fadeIn 1.2s both;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0;}
+      to { opacity: 1;}
+    }
+  </style>  
+</head>
+<body class="bg-gradient-to-br from-gray-900 via-black to-gray-800 min-h-screen text-gray-100">
+
+  <!-- Navbar -->
+<nav class="navbar bg-black/70 shadow-lg sticky top-0 z-50 backdrop-blur-lg fade-in">
+  <div class="container mx-auto flex justify-between items-center py-2 px-4 md:px-0">
+
+    <!-- Logo -->
+    <div class="flex items-center gap-2">
+      <svg width="40" height="40" viewBox="0 0 44 44" fill="none">
+        <circle cx="22" cy="22" r="22" fill="#A259FF"/>
+        <path d="M14 22C14 17.5817 17.5817 14 22 14C26.4183 14 30 17.5817 30 22C30 26.4183 26.4183 30 22 30C17.5817 30 14 26.4183 14 22Z" fill="white"/>
+      </svg>
+      <span class="text-xl md:text-2xl font-bold tracking-wide text-purple-700">AZARA NFT</span>
+    </div>
+
+    <!-- Desktop Navigation -->
+    <div class="hidden md:flex gap-8 font-semibold text-base">
+      <a href="../views/index.html" class="hover:text-purple-300 transition">Home</a>
+      <a href="../views/market.html" class="hover:text-purple-300 transition">Market</a>
+      <a href="../views/collections.html" class="hover:text-purple-300 transition">Collections</a>
+      <a href="../views/trending.html" class="hover:text-purple-300 transition">Trending</a>
+      <a href="../views/wallet.html" class="hover:text-purple-300 transition">Wallet</a>
+    </div>
+
+    <!-- Controls -->
+    <div class="flex items-center gap-2">
+      <!-- Mobile Menu Toggle -->
+      <button id="menu-btn" class="md:hidden btn btn-circle btn-ghost">
+        <svg class="w-6 h-6 text-purple-700" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+          stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
+
+      <!-- Profile Icon (Desktop only) -->
+      <button class="btn btn-circle btn-ghost hidden md:inline-block">
+        <svg class="w-6 h-6 text-purple-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M5.121 17.804A9 9 0 1 1 21 12.001M15 11a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+        </svg>
+      </button>
+
+      <!-- Connect Wallet -->
+      <button onclick="toggleModal()" class="bg-purple-700 text-white px-4 py-2 rounded-md hover:bg-purple-600 transition">
+        Connect Wallet
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="md:hidden hidden px-4 pb-4 fade-in-up">
+    <nav class="flex flex-col gap-2 mt-4">
+      <a href="../views/index.html" class="btn btn-ghost btn-sm rounded-btn">Home</a>
+      <a href="../views/market.html" class="btn btn-ghost btn-sm rounded-btn">Market</a>
+      <a href="../views/collections.html" class="btn btn-ghost btn-sm rounded-btn">Collections</a>
+      <a href="../views/trending.html" class="btn btn-ghost btn-sm rounded-btn">Trending</a>
+      <a href="../views/wallet.html" class="btn btn-ghost btn-sm rounded-btn">Wallet</a>
+    </nav>
+  </div>
+</nav>
+<!-- Connect Wallet Modal -->
+<div id="walletModal" class="fixed inset-0 hidden items-center justify-center bg-black bg-opacity-50 z-50 transition-opacity">
+  <div class="bg-gray-900 p-6 rounded-2xl shadow-2xl transform scale-95 animate-fade-in-up w-full max-w-md mx-auto">
+    <h2 class="text-2xl font-bold text-purple-300 mb-6 text-center">Choose a wallet provider</h2>
+    
+    <ul class="space-y-4">
+      <li>
+        <button class="w-full flex items-center gap-3 px-5 py-3 rounded-lg border border-purple-500 bg-purple-800 hover:bg-purple-700 transition">
+          <img src="https://cdn.animaapp.com/projects/63aaf7e2426e9824f0350c11/releases/63aaf8f2426e9824f0350c13/img/metamask@2x.svg"
+               alt="Metamask" class="w-7 h-7" />
+          <span class="text-white text-base font-medium">Metamask</span>
+        </button>
+      </li>
+
+      <li>
+        <button class="w-full flex items-center gap-3 px-5 py-3 rounded-lg border border-blue-500 bg-blue-800 hover:bg-blue-700 transition">
+          <img src="https://cdn.animaapp.com/projects/63aaf7e2426e9824f0350c11/releases/63aaf8f2426e9824f0350c13/img/walletconnect@2x.svg"
+               alt="WalletConnect" class="w-7 h-7" />
+          <span class="text-white text-base font-medium">Wallet Connect</span>
+        </button>
+      </li>
+
+      <li>
+        <button class="w-full flex items-center gap-3 px-5 py-3 rounded-lg border border-yellow-500 bg-yellow-800 hover:bg-yellow-700 transition">
+          <img src="https://cdn.animaapp.com/projects/63aaf7e2426e9824f0350c11/releases/63aaf8f2426e9824f0350c13/img/coinbase@2x.svg"
+               alt="Coinbase" class="w-7 h-7" />
+          <span class="text-yellow-300 text-base font-medium">Coinbase</span>
+        </button>
+      </li>
+    </ul>
+
+    <button onclick="toggleModal()" class="mt-6 w-full text-center text-gray-400 hover:text-white transition text-sm">
+      Close
+    </button>
+  </div>
+</div>
+
+<script>
+  // Toggle Wallet Modal
+function toggleModal() {
+  const modal = document.getElementById("walletModal");
+  modal.classList.toggle("hidden");
+  modal.classList.toggle("flex");
+}
+
+// Toggle Mobile Menu
+document.getElementById('menu-btn').onclick = () => {
+  document.getElementById('mobile-menu').classList.toggle('hidden');
+};
+
+// Optional: Hide menu when clicking a mobile link
+document.querySelectorAll('#mobile-menu a').forEach(link => {
+  link.addEventListener('click', () => {
+    document.getElementById('mobile-menu').classList.add('hidden');
+  });
+});
+
+</script>  
+<!-- Tailwind Animate Utility -->
+  <style>
+    @keyframes fade-in-up {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-fade-in-up {
+      animation: fade-in-up 0.5s ease-out forwards;
+    }
+  </style>
+  
+  <script>
+    document.getElementById('menu-btn').onclick = () =>
+      document.getElementById('mobile-menu').classList.toggle('hidden');
+  </script>
+</nav>
+  <!-- Main Content -->
+  <main class="container mx-auto px-4 py-10 flex-grow">
+    <h1 class="text-4xl font-bold text-center mb-10 animate-fade-up">🌍 Trending NFTs Around the World</h1>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      
+      <!-- NFT Card -->
+      <div class="card bg-base-200 shadow-xl transition-transform duration-300 hover:scale-105">
+        <figure><img src="../image/Copilot_20250723_055244.png" alt="NFT Example" class="h-60 w-full object-cover"/></figure>
+        <div class="card-body">
+          <h2 class="card-title text-xl">Crystal Skulls #102</h2>
+          <p>👨‍🎨 <span class="font-medium">ZaraCrypto</span></p>
+          <p>📍 Lagos, Nigeria</p>
+          <p>🕒 Listed: 3 hours ago</p>
+          <p>💰 Current Bid: <span class="text-primary font-bold">5.00 ETH</span></p>
+          <div class="card-actions justify-end">
+            <button class="btn btn-accent">Place a Bid</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Add more NFT Cards below -->
+      <div class="card bg-base-200 shadow-xl hover:scale-105 transition duration-300">
+        <figure><img src="https://i.kinja-img.com/image/upload/c_fit,q_60,w_645/0b2d8436e04db9004336c19c27884422.jpg" alt="NFT 2" class="h-60 w-full object-cover"/></figure>
+        <div class="card-body">
+          <h2 class="card-title">Galactic Queens #88</h2>
+          <p>👨‍🎨 LunarLion</p>
+          <p>📍 Tokyo, Japan</p>
+          <p>🕒 Listed: 1 day ago</p>
+          <p>💰 Current Bid: <span class="text-primary font-bold">3.20 ETH</span></p>
+          <div class="card-actions justify-end">
+            <button class="btn btn-accent">Place a Bid</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card bg-base-200 shadow-xl hover:scale-105 transition duration-300">
+        <figure><img src="https://miro.medium.com/v2/resize:fit:1024/1*oznDAWIns2ei6-1P8oSTxQ.jpeg" alt="NFT 3" class="h-60 w-full object-cover"/></figure>
+        <div class="card-body">
+          <h2 class="card-title">Cyber Panther X</h2>
+          <p>👨‍🎨 NeonNFTs</p>
+          <p>📍 Berlin, Germany</p>
+          <p>🕒 Listed: 6 hours ago</p>
+          <p>💰 Current Bid: <span class="text-primary font-bold">6.75 ETH</span></p>
+          <div class="card-actions justify-end">
+            <button class="btn btn-accent">Place a Bid</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card bg-base-200 shadow-xl hover:scale-105 transition duration-300">
+        <figure><img src="https://tse2.mm.bing.net/th/id/OIP.J0MT14M-Syn4yNYaq9HibQHaHa?r=0&rs=1&pid=ImgDetMain&o=7&rm=3" alt="NFT 4" class="h-60 w-full object-cover"/></figure>
+        <div class="card-body">
+          <h2 class="card-title">Mystic Fox</h2>
+          <p>👨‍🎨 ArtByFox</p>
+          <p>📍 Sydney, Australia</p>
+          <p>🕒 Listed: 12 hours ago</p>
+          <p>💰 Current Bid: <span class="text-primary font-bold">4.50 ETH</span></p>
+          <div class="card-actions justify-end">
+            <button class="btn btn-accent">Place a Bid</button>
+          </div>
+        </div>
+      </div>
+
+        <div class="card bg-base-200 shadow-xl hover:scale-105 transition duration-300">
+            <figure><img src="https://images.cointelegraph.com/images/960_aHR0cHM6Ly9zMy5jb2ludGVsZWdyYXBoLmNvbS91cGxvYWRzLzIwMjEtMDYvYTljZWE3YjEtMjYwYi00OGNmLThhMWUtNWQ1YjQ2OWI3MGU1LmpwZWc=.jpg" alt="NFT 5" class="h-60 w-full object-cover"/></figure>
+            <div class="card-body">
+            <h2 class="card-title">Digital Dreams</h2>
+            <p>👨‍🎨 DreamyArt</p>
+            <p>📍 Paris, France</p>
+            <p>🕒 Listed: 2 days ago</p>
+            <p>💰 Current Bid: <span class="text-primary font-bold">8.00 ETH</span></p>
+            <div class="card-actions justify-end">
+                <button class="btn btn-accent">Place a Bid</button>
+            </div>
+            </div>
+        </div>
+
+        
+        <div class="card bg-base-200 shadow-xl hover:scale-105 transition duration-300">
+            <figure><img src="https://pics.craiyon.com/2023-10-09/ce544b13cdd8409ea747f83722268bd2.webp" alt="NFT 6" class="h-60 w-full object-cover"/></figure>
+            <div class="card-body">
+            <h2 class="card-title">Xackers </h2>
+            <p>👨lagos island X</p>
+            <p>📍 Lagos, Nigeria</p>
+            <p>🕒 Listed: 2 days ago</p>
+            <p>💰 Current Bid: <span class="text-primary font-bold">8.00 ETH</span></p>
+            <div class="card-actions justify-end">
+                <button class="btn btn-accent">Place a Bid</button>
+            </div>
+            </div>
+        </div>
+
+    </div>
+  </main>
+  
+  
+<footer class="w-full bg-gradient-to-tr from-gray-900 via-purple-900 to-gray-900 text-white pt-16 pb-10 animate-fade-in">
+  <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-10 text-sm">
+
+    <!-- Branding -->
+    <div class="animate-fade-in-up">
+      <div class="flex items-center mb-4 space-x-3">
+        <svg width="40" height="40" viewBox="0 0 44 44" fill="none">
+          <circle cx="22" cy="22" r="22" fill="#A259FF"/>
+          <path d="M14 22C14 17.5817 17.5817 14 22 14C26.4183 14 30 17.5817 30 22C30 26.4183 26.4183 30 22 30C17.5817 30 14 26.4183 14 22Z" fill="white"/>
+        </svg>
+        <span class="text-xl font-bold tracking-wide text-purple-300">AZARA NFT</span>
+      </div>
+      <p class="text-gray-400 leading-relaxed">
+        Discover, collect, and sell extraordinary NFTs. Your gateway to blockchain artistry and digital trade.
+      </p>
+    </div>
+
+    <!-- Marketplace Links -->
+    <div class="animate-fade-in-up" style="animation-delay: 0.1s">
+      <h5 class="font-semibold mb-4 text-base text-purple-300">Marketplace</h5>
+      <ul class="space-y-2 text-gray-300">
+        <li><a href="#" class="hover:text-purple-400 transition duration-300">Home</a></li>
+        <li><a href="#market" class="hover:text-purple-400 transition duration-300">Market</a></li>
+        <li><a href="#collections" class="hover:text-purple-400 transition duration-300">Collections</a></li>
+        <li><a href="#trending" class="hover:text-purple-400 transition duration-300">Trending</a></li>
+        <li><a href="#wallet" class="hover:text-purple-400 transition duration-300">Wallet</a></li>
+      </ul>
+    </div>
+
+    <!-- Resources Links -->
+    <div class="animate-fade-in-up" style="animation-delay: 0.2s">
+      <h5 class="font-semibold mb-4 text-base text-purple-300">Resources</h5>
+      <ul class="space-y-2 text-gray-300">
+        <li><a href="#" class="hover:text-purple-400 transition duration-300">Help Center</a></li>
+        <li><a href="#" class="hover:text-purple-400 transition duration-300">Blog</a></li>
+        <li><a href="#" class="hover:text-purple-400 transition duration-300">Partners</a></li>
+        <li><a href="#" class="hover:text-purple-400 transition duration-300">About Us</a></li>
+      </ul>
+    </div>
+
+    <!-- Newsletter & Social -->
+    <div class="animate-fade-in-up" style="animation-delay: 0.3s">
+      <h5 class="font-semibold mb-4 text-base text-purple-300">Stay Updated</h5>
+      <form class="flex flex-col sm:flex-row gap-3 mb-4">
+        <input 
+          type="email" 
+          placeholder="Your email address" 
+          required
+          class="rounded-md px-4 py-2 w-full text-gray-800 focus:outline-none focus:ring-2 focus:ring-purple-500" 
+        />
+        <button 
+          type="submit"
+          class="bg-purple-600 hover:bg-purple-500 px-4 py-2 rounded-md text-white font-semibold transition duration-300 whitespace-nowrap"
+        >
+          Subscribe
+        </button>
+      </form>
+      <div class="flex space-x-4 text-white">
+        <a href="#" class="hover:text-blue-400 transition duration-300" aria-label="Facebook">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+          </svg>
+        </a>
+        <a href="#" class="hover:text-blue-300 transition duration-300" aria-label="Globe">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="m12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/>
+            <path d="M2 12h20"/>
+          </svg>
+        </a>
+        <a href="#" class="hover:text-red-400 transition duration-300" aria-label="YouTube">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M23.498 6.186a2.977 2.977 0 0 0-2.096-2.094C19.546 3.66 12 3.66 12 3.66s-7.546 0-9.402.432A2.977 2.977 0 0 0 .502 6.186C.07 8.042.07 12 .07 12s0 3.958.432 5.814a2.977 2.977 0 0 0 2.096 2.094C4.454 20.34 12 20.34 12 20.34s7.546 0 9.402-.432a2.977 2.977 0 0 0 2.096-2.094C23.93 15.958 23.93 12 23.93 12s0-3.958-.432-5.814zM9.69 15.69V8.31L15.81 12l-6.12 3.69z"/>
+          </svg>
+        </a>
+        <a href="#" class="hover:text-green-400 transition duration-300" aria-label="WhatsApp">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="m3 21 1.9-5.7a8.5 8.5 0 1 1 3.8 3.8z"/>
+            <path d="M9 10a3 3 0 0 0 6 0"/>
+          </svg>
+        </a>
+        <a href="#" class="hover:text-pink-400 transition duration-300" aria-label="Instagram">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
+            <path d="m16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+            <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Base Line -->
+  <div class="mt-10 pt-5 border-t border-purple-700 text-center text-xs text-gray-400 animate-fade-in-up" style="animation-delay: 0.5s">
+    © 2025 AZARA NFT MARKETPLACE. All rights reserved.
+  </div>
+</footer>
+  <!-- AOS Scroll Animation JS -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>AOS.init({ duration: 1000, once: true });</script>
+</body>
+</html>
+

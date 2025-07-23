@@ -72,8 +72,8 @@
     <div class="hidden md:flex gap-8 font-semibold text-base">
       <a href="#" class="hover:text-purple-300 transition">Home</a>
       <a href="../views/market.html" class="hover:text-purple-300 transition">Market</a>
-      <a href="#collections" class="hover:text-purple-300 transition">Collections</a>
-      <a href="#trending" class="hover:text-purple-300 transition">Trending</a>
+      <a href="../views/collections.html" class="hover:text-purple-300 transition">Collections</a>
+      <a href="../views/trending.html" class="hover:text-purple-300 transition">Trending</a>
       <a href="../views/wallet.html" class="hover:text-purple-300 transition">Wallet</a>
     </div>
 
@@ -94,12 +94,10 @@
             d="M5.121 17.804A9 9 0 1 1 21 12.001M15 11a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
         </svg>
       </button>
-
-      <!-- Connect Wallet -->
-      <button onclick="toggleModal()" class="bg-purple-700 text-white px-4 py-2 rounded-md hover:bg-purple-600 transition">
+      <!-- Connect Wallet (Desktop only) -->
+      <a href="#wallet" class="hidden md:inline-block bg-purple-700 text-white px-4 py-2 rounded-md hover:bg-purple-600 transition">
         Connect Wallet
-      </button>
-    </div>
+      </a>
   </div>
 
   <!-- Mobile Menu -->
@@ -107,8 +105,8 @@
     <nav class="flex flex-col gap-2 mt-4">
       <a href="#" class="btn btn-ghost btn-sm rounded-btn">Home</a>
       <a href="../views/market.html" class="btn btn-ghost btn-sm rounded-btn">Market</a>
-      <a href="#collections" class="btn btn-ghost btn-sm rounded-btn">Collections</a>
-      <a href="#trending" class="btn btn-ghost btn-sm rounded-btn">Trending</a>
+      <a href="../views/collections.html" class="btn btn-ghost btn-sm rounded-btn">Collections</a>
+      <a href="../views/trending.html" class="btn btn-ghost btn-sm rounded-btn">Trending</a>
       <a href="../views/wallet.html" class="btn btn-ghost btn-sm rounded-btn">Wallet</a>
     </nav>
   </div>
