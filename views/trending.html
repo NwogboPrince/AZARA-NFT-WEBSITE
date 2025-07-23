@@ -1,109 +1,109 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="luxury">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Trending NFTs - NFT Marketplace</title>
-  <!-- Tailwind + DaisyUI + Flowbite CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.4.0/dist/full.css" rel="stylesheet" />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://unpkg.com/flowbite@2.3.0/dist/flowbite.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Trending NFTs - NFT Marketplace</title>
+    <!-- Tailwind + DaisyUI + Flowbite CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.4.0/dist/full.css" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/flowbite@2.3.0/dist/flowbite.min.js"></script>
 </head>
-  <script>
-    // Smooth scroll
-    document.addEventListener("DOMContentLoaded", function () {
-      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener("click", function (e) {
-          e.preventDefault();
-          document.querySelector(this.getAttribute("href")).scrollIntoView({
-            behavior: "smooth"
-          });
+    <script>
+        // Smooth scroll
+        document.addEventListener("DOMContentLoaded", function () {
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener("click", function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute("href")).scrollIntoView({
+                        behavior: "smooth"
+                    });
+                });
+            });
         });
-      });
-    });
 
-    // Modal interactivity
-    function toggleModal() {
-      document.getElementById("walletModal").classList.toggle("hidden");
-      document.getElementById("walletModal").classList.toggle("flex");
-    }
-  </script>
-  <style>
-    html { font-size: 18px; }
-    body { font-family: 'Manrope', 'Inter', sans-serif; }
-    .glass {
-      background: rgba(255,255,255,0.8);
-      backdrop-filter: blur(16px);
-      box-shadow: 0 8px 32px rgba(80,0,120,0.10);
-    }
-    .fade-in-up {
-      animation: fadeInUp 1s cubic-bezier(.39,.575,.565,1.000) both;
-    }
-    @keyframes fadeInUp {
-      0% { opacity: 0; transform: translateY(40px);}
-      100% { opacity: 1; transform: translateY(0);}
-    }
-    .fade-in {
-      animation: fadeIn 1.2s both;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0;}
-      to { opacity: 1;}
-    }
-  </style>  
+        // Modal interactivity
+        function toggleModal() {
+            document.getElementById("walletModal").classList.toggle("hidden");
+            document.getElementById("walletModal").classList.toggle("flex");
+        }
+    </script>
+    <style>
+        html { font-size: 18px; }
+        body { font-family: 'Manrope', 'Inter', sans-serif; }
+        .glass {
+            background: rgba(255,255,255,0.8);
+            backdrop-filter: blur(16px);
+            box-shadow: 0 8px 32px rgba(80,0,120,0.10);
+        }
+        .fade-in-up {
+            animation: fadeInUp 1s cubic-bezier(.39,.575,.565,1.000) both;
+        }
+        @keyframes fadeInUp {
+            0% { opacity: 0; transform: translateY(40px);}
+            100% { opacity: 1; transform: translateY(0);}
+        }
+        .fade-in {
+            animation: fadeIn 1.2s both;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0;}
+            to { opacity: 1;}
+        }
+    </style>  
 </head>
 <body class="bg-gradient-to-br from-gray-900 via-black to-gray-800 min-h-screen text-gray-100">
 
-  <!-- Navbar -->
+    <!-- Navbar -->
 <nav class="navbar bg-black/70 shadow-lg sticky top-0 z-50 backdrop-blur-lg fade-in">
-  <div class="container mx-auto flex justify-between items-center py-2 px-4 md:px-0">
+    <div class="container mx-auto flex justify-between items-center py-2 px-4 md:px-0">
 
-    <!-- Logo -->
-    <div class="flex items-center gap-2">
-      <svg width="40" height="40" viewBox="0 0 44 44" fill="none">
-        <circle cx="22" cy="22" r="22" fill="#A259FF"/>
-        <path d="M14 22C14 17.5817 17.5817 14 22 14C26.4183 14 30 17.5817 30 22C30 26.4183 26.4183 30 22 30C17.5817 30 14 26.4183 14 22Z" fill="white"/>
-      </svg>
-      <span class="text-xl md:text-2xl font-bold tracking-wide text-purple-700">AZARA NFT</span>
+        <!-- Logo -->
+        <div class="flex items-center gap-2">
+            <svg width="40" height="40" viewBox="0 0 44 44" fill="none">
+                <circle cx="22" cy="22" r="22" fill="#A259FF"/>
+                <path d="M14 22C14 17.5817 17.5817 14 22 14C26.4183 14 30 17.5817 30 22C30 26.4183 26.4183 30 22 30C17.5817 30 14 26.4183 14 22Z" fill="white"/>
+            </svg>
+            <span class="text-xl md:text-2xl font-bold tracking-wide text-purple-700">AZARA NFT</span>
+        </div>
+
+        <!-- Desktop Navigation -->
+        <div class="hidden md:flex gap-8 font-semibold text-base">
+            <a href="../views/index.html" class="hover:text-purple-300 transition">Home</a>
+            <a href="../views/market.html" class="hover:text-purple-300 transition">Market</a>
+            <a href="../views/collections.html" class="hover:text-purple-300 transition">Collections</a>
+            <a href="../views/trending.html" class="hover:text-purple-300 transition">Trending</a>
+            <a href="../views/wallet.html" class="hover:text-purple-300 transition">Wallet</a>
+        </div>
+
+        <!-- Controls -->
+        <div class="flex items-center gap-2">
+            <!-- Mobile Menu Toggle -->
+            <button id="menu-btn" class="md:hidden btn btn-circle btn-ghost focus:outline-none" aria-label="Open menu">
+                <svg class="w-6 h-6 text-purple-700" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+                </svg>
+            </button>
+
+            <!-- Profile Icon (Desktop only) -->
+            <button class="btn btn-circle btn-ghost hidden md:inline-block">
+                <svg class="w-6 h-6 text-purple-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M5.121 17.804A9 9 0 1 1 21 12.001M15 11a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                </svg>
+            </button>
+
+            <!-- Connect Wallet -->
+            <button onclick="toggleModal()" class="bg-purple-700 text-white px-4 py-2 rounded-md hover:bg-purple-600 transition">
+                Connect Wallet
+            </button>
+        </div>
     </div>
 
-    <!-- Desktop Navigation -->
-    <div class="hidden md:flex gap-8 font-semibold text-base">
-      <a href="../views/index.html" class="hover:text-purple-300 transition">Home</a>
-      <a href="../views/market.html" class="hover:text-purple-300 transition">Market</a>
-      <a href="../views/collections.html" class="hover:text-purple-300 transition">Collections</a>
-      <a href="../views/trending.html" class="hover:text-purple-300 transition">Trending</a>
-      <a href="../views/wallet.html" class="hover:text-purple-300 transition">Wallet</a>
-    </div>
-
-    <!-- Controls -->
-    <div class="flex items-center gap-2">
-      <!-- Mobile Menu Toggle -->
-      <button id="menu-btn" class="md:hidden btn btn-circle btn-ghost">
-        <svg class="w-6 h-6 text-purple-700" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-          stroke="currentColor" stroke-width="2">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
-        </svg>
-      </button>
-
-      <!-- Profile Icon (Desktop only) -->
-      <button class="btn btn-circle btn-ghost hidden md:inline-block">
-        <svg class="w-6 h-6 text-purple-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round"
-            d="M5.121 17.804A9 9 0 1 1 21 12.001M15 11a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-        </svg>
-      </button>
-
-      <!-- Connect Wallet -->
-      <button onclick="toggleModal()" class="bg-purple-700 text-white px-4 py-2 rounded-md hover:bg-purple-600 transition">
-        Connect Wallet
-      </button>
-    </div>
-  </div>
-
-  <!-- Mobile Menu -->
-  <div id="mobile-menu" class="md:hidden hidden px-4 pb-4 fade-in-up">
-    <nav class="flex flex-col gap-2 mt-4">
+    <!-- Mobile Menu (Redesigned) -->
+    <div id="mobile-menu" class="fixed inset-0 z-50 bg-black bg-opacity-80 backdrop-blur-lg flex flex-col items-center justify-center md:hidden hidden transition-all duration-300">
+        <button id="close-menu-btn" class="absolute top-6 right-6 btn btn-
       <a href="../views/index.html" class="btn btn-ghost btn-sm rounded-btn">Home</a>
       <a href="../views/market.html" class="btn btn-ghost btn-sm rounded-btn">Market</a>
       <a href="../views/collections.html" class="btn btn-ghost btn-sm rounded-btn">Collections</a>
@@ -188,21 +188,22 @@ document.querySelectorAll('#mobile-menu a').forEach(link => {
     }
   </style>
   
-  <script>
-    document.getElementById('menu-btn').onclick = () =>
-      document.getElementById('mobile-menu').classList.toggle('hidden');
-  </script>
-</nav>
+<script>
+  document.getElementById('menu-btn').onclick = () =>
+    document.getElementById('mobile-menu').classList.toggle('hidden');
+</script>
   <!-- Main Content -->
-  <main class="container mx-auto px-4 py-10 flex-grow">
-    <h1 class="text-4xl font-bold text-center mb-10 animate-fade-up">🌍 Trending NFTs Around the World</h1>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+  <main class="container mx-auto px-2 sm:px-4 py-8 flex-grow">
+    <h1 class="text-3xl sm:text-4xl font-bold text-center mb-8 animate-fade-up">🌍 Trending NFTs Around the World</h1>
+    <div class="grid grid-cols-1 xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
       
       <!-- NFT Card -->
       <div class="card bg-base-200 shadow-xl transition-transform duration-300 hover:scale-105">
-        <figure><img src="../image/Copilot_20250723_055244.png" alt="NFT Example" class="h-60 w-full object-cover"/></figure>
+        <figure>
+          <img src="../image/Copilot_20250723_055244.png" alt="NFT Example" class="h-48 sm:h-60 w-full object-cover"/>
+        </figure>
         <div class="card-body">
-          <h2 class="card-title text-xl">Crystal Skulls #102</h2>
+          <h2 class="card-title text-lg sm:text-xl">Crystal Skulls #102</h2>
           <p>👨‍🎨 <span class="font-medium">ZaraCrypto</span></p>
           <p>📍 Lagos, Nigeria</p>
           <p>🕒 Listed: 3 hours ago</p>
@@ -215,9 +216,11 @@ document.querySelectorAll('#mobile-menu a').forEach(link => {
 
       <!-- Add more NFT Cards below -->
       <div class="card bg-base-200 shadow-xl hover:scale-105 transition duration-300">
-        <figure><img src="https://i.kinja-img.com/image/upload/c_fit,q_60,w_645/0b2d8436e04db9004336c19c27884422.jpg" alt="NFT 2" class="h-60 w-full object-cover"/></figure>
+        <figure>
+          <img src="https://i.kinja-img.com/image/upload/c_fit,q_60,w_645/0b2d8436e04db9004336c19c27884422.jpg" alt="NFT 2" class="h-48 sm:h-60 w-full object-cover"/>
+        </figure>
         <div class="card-body">
-          <h2 class="card-title">Galactic Queens #88</h2>
+          <h2 class="card-title text-lg sm:text-xl">Galactic Queens #88</h2>
           <p>👨‍🎨 LunarLion</p>
           <p>📍 Tokyo, Japan</p>
           <p>🕒 Listed: 1 day ago</p>
@@ -229,9 +232,11 @@ document.querySelectorAll('#mobile-menu a').forEach(link => {
       </div>
 
       <div class="card bg-base-200 shadow-xl hover:scale-105 transition duration-300">
-        <figure><img src="https://miro.medium.com/v2/resize:fit:1024/1*oznDAWIns2ei6-1P8oSTxQ.jpeg" alt="NFT 3" class="h-60 w-full object-cover"/></figure>
+        <figure>
+          <img src="https://miro.medium.com/v2/resize:fit:1024/1*oznDAWIns2ei6-1P8oSTxQ.jpeg" alt="NFT 3" class="h-48 sm:h-60 w-full object-cover"/>
+        </figure>
         <div class="card-body">
-          <h2 class="card-title">Cyber Panther X</h2>
+          <h2 class="card-title text-lg sm:text-xl">Cyber Panther X</h2>
           <p>👨‍🎨 NeonNFTs</p>
           <p>📍 Berlin, Germany</p>
           <p>🕒 Listed: 6 hours ago</p>
@@ -243,9 +248,11 @@ document.querySelectorAll('#mobile-menu a').forEach(link => {
       </div>
 
       <div class="card bg-base-200 shadow-xl hover:scale-105 transition duration-300">
-        <figure><img src="https://tse2.mm.bing.net/th/id/OIP.J0MT14M-Syn4yNYaq9HibQHaHa?r=0&rs=1&pid=ImgDetMain&o=7&rm=3" alt="NFT 4" class="h-60 w-full object-cover"/></figure>
+        <figure>
+          <img src="https://tse2.mm.bing.net/th/id/OIP.J0MT14M-Syn4yNYaq9HibQHaHa?r=0&rs=1&pid=ImgDetMain&o=7&rm=3" alt="NFT 4" class="h-48 sm:h-60 w-full object-cover"/>
+        </figure>
         <div class="card-body">
-          <h2 class="card-title">Mystic Fox</h2>
+          <h2 class="card-title text-lg sm:text-xl">Mystic Fox</h2>
           <p>👨‍🎨 ArtByFox</p>
           <p>📍 Sydney, Australia</p>
           <p>🕒 Listed: 12 hours ago</p>
@@ -256,34 +263,37 @@ document.querySelectorAll('#mobile-menu a').forEach(link => {
         </div>
       </div>
 
-        <div class="card bg-base-200 shadow-xl hover:scale-105 transition duration-300">
-            <figure><img src="https://images.cointelegraph.com/images/960_aHR0cHM6Ly9zMy5jb2ludGVsZWdyYXBoLmNvbS91cGxvYWRzLzIwMjEtMDYvYTljZWE3YjEtMjYwYi00OGNmLThhMWUtNWQ1YjQ2OWI3MGU1LmpwZWc=.jpg" alt="NFT 5" class="h-60 w-full object-cover"/></figure>
-            <div class="card-body">
-            <h2 class="card-title">Digital Dreams</h2>
-            <p>👨‍🎨 DreamyArt</p>
-            <p>📍 Paris, France</p>
-            <p>🕒 Listed: 2 days ago</p>
-            <p>💰 Current Bid: <span class="text-primary font-bold">8.00 ETH</span></p>
-            <div class="card-actions justify-end">
-                <button class="btn btn-accent">Place a Bid</button>
-            </div>
-            </div>
+      <div class="card bg-base-200 shadow-xl hover:scale-105 transition duration-300">
+        <figure>
+          <img src="https://images.cointelegraph.com/images/960_aHR0cHM6Ly9zMy5jb2ludGVsZWdyYXBoLmNvbS91cGxvYWRzLzIwMjEtMDYvYTljZWE3YjEtMjYwYi00OGNmLThhMWUtNWQ1YjQ2OWI3MGU1LmpwZWc=.jpg" alt="NFT 5" class="h-48 sm:h-60 w-full object-cover"/>
+        </figure>
+        <div class="card-body">
+          <h2 class="card-title text-lg sm:text-xl">Digital Dreams</h2>
+          <p>👨‍🎨 DreamyArt</p>
+          <p>📍 Paris, France</p>
+          <p>🕒 Listed: 2 days ago</p>
+          <p>💰 Current Bid: <span class="text-primary font-bold">8.00 ETH</span></p>
+          <div class="card-actions justify-end">
+            <button class="btn btn-accent">Place a Bid</button>
+          </div>
         </div>
+      </div>
 
-        
-        <div class="card bg-base-200 shadow-xl hover:scale-105 transition duration-300">
-            <figure><img src="https://pics.craiyon.com/2023-10-09/ce544b13cdd8409ea747f83722268bd2.webp" alt="NFT 6" class="h-60 w-full object-cover"/></figure>
-            <div class="card-body">
-            <h2 class="card-title">Xackers </h2>
-            <p>👨lagos island X</p>
-            <p>📍 Lagos, Nigeria</p>
-            <p>🕒 Listed: 2 days ago</p>
-            <p>💰 Current Bid: <span class="text-primary font-bold">8.00 ETH</span></p>
-            <div class="card-actions justify-end">
-                <button class="btn btn-accent">Place a Bid</button>
-            </div>
-            </div>
+      <div class="card bg-base-200 shadow-xl hover:scale-105 transition duration-300">
+        <figure>
+          <img src="https://pics.craiyon.com/2023-10-09/ce544b13cdd8409ea747f83722268bd2.webp" alt="NFT 6" class="h-48 sm:h-60 w-full object-cover"/>
+        </figure>
+        <div class="card-body">
+          <h2 class="card-title text-lg sm:text-xl">Xackers </h2>
+          <p>👨lagos island X</p>
+          <p>📍 Lagos, Nigeria</p>
+          <p>🕒 Listed: 2 days ago</p>
+<footer class="w-full bg-gradient-to-tr from-gray-900 via-purple-900 to-gray-900 text-white pt-12 pb-8 animate-fade-in">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 text-sm">
+            <button class="btn btn-accent">Place a Bid</button>
+          </div>
         </div>
+      </div>
 
     </div>
   </main>
