@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Trending NFTs - NFT Marketplace</title>
+    <title>AZARANftverse- Marketplace</title>
     <!-- Tailwind + DaisyUI + Flowbite CSS -->
     <link href="https://cdn.jsdelivr.net/npm/daisyui@4.4.0/dist/full.css" rel="stylesheet" />
     <script src="https://cdn.tailwindcss.com"></script>
@@ -64,7 +64,9 @@
                 <circle cx="22" cy="22" r="22" fill="#A259FF"/>
                 <path d="M14 22C14 17.5817 17.5817 14 22 14C26.4183 14 30 17.5817 30 22C30 26.4183 26.4183 30 22 30C17.5817 30 14 26.4183 14 22Z" fill="white"/>
             </svg>
-            <span class="text-xl md:text-2xl font-bold tracking-wide text-purple-700">AZARA NFT</span>
+            <span class="text-xl md:text-2xl font-bold tracking-wide text-purple-700">
+              <a href="../views/index.html">AZARA NFT</a>
+            </span>
         </div>
 
         <!-- Desktop Navigation -->
@@ -94,10 +96,6 @@
                 </svg>
             </button>
 
-            <!-- Connect Wallet -->
-            <button onclick="toggleModal()" class="bg-purple-700 text-white px-4 py-2 rounded-md hover:bg-purple-600 transition">
-                Connect Wallet
-            </button>
         </div>
     </div>
 
@@ -111,8 +109,137 @@
       <a href="../views/wallet.html" class="btn btn-ghost btn-sm rounded-btn">Wallet</a>
     </nav>
   </div>
+  <script>
+    // Helper: Check if wallet is connected and user is registered
+    function isWalletConnected() {
+      return !!localStorage.getItem('walletAddress');
+    }
+    function isUserRegistered() {
+      return !!localStorage.getItem('userRegistered');
+    }
+
+
+    // Show registration modal if wallet connected but not registered
+    function connectWalletAndRegister(address) {
+      localStorage.setItem('walletAddress', address);
+      if (!localStorage.getItem('userRegistered')) {
+        toggleRegisterModal(true);
+      }
+    }
+
+    // Registration modal logic
+    function toggleRegisterModal(show) {
+      const modal = document.getElementById('registerModal');
+      if (show) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      } else {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+        document.getElementById('registerForm').reset();
+      }
+    }
+
+
+    // Attach to wallet modal buttons
+    document.querySelectorAll('#walletModal button').forEach(btn => {
+      btn.addEventListener('click', function (e) {
+        if (this.textContent.includes('Metamask')) {
+          connectWalletAndRegister('0xMetaMaskDemoAddress');
+        } else if (this.textContent.includes('Wallet Connect')) {
+          connectWalletAndRegister('0xWalletConnectDemoAddress');
+        } else if (this.textContent.includes('Coinbase')) {
+          connectWalletAndRegister('0xCoinbaseDemoAddress');
+        }
+      });
+    });
+
+    // Registration form submit
+    document.addEventListener('DOMContentLoaded', function() {
+      const regForm = document.getElementById('registerForm');
+      if (regForm) {
+        regForm.onsubmit = async function(e) {
+          e.preventDefault();
+          const username = document.getElementById('regUsername').value;
+          const email = document.getElementById('regEmail').value;
+          const password = document.getElementById('regPassword').value;
+          try {
+            const res = await fetch('/api/auth/register', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ username, email, password })
+            });
+            const data = await res.json();
+            if (res.ok) {
+              localStorage.setItem('userRegistered', 'true');
+              localStorage.setItem('userToken', data.token);
+              localStorage.setItem('userEmail', email);
+              localStorage.setItem('userName', username);
+              alert('Registration successful!');
+              toggleRegisterModal(false);
+            } else {
+              alert(data.message || 'Registration failed');
+            }
+          } catch (err) {
+            alert('Error registering.');
+          }
+        };
+      }
+    });
+
+    // Place Bid handler
+    async function handlePlaceBid(nftTitle) {
+      if (!isWalletConnected() || !isUserRegistered()) {
+        toggleModal();
+        alert('Please connect your wallet and register before placing a bid.');
+        return;
+      }
+      // Example: Send bid to backend
+      try {
+        const response = await fetch('/api/place-bid', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            wallet: localStorage.getItem('walletAddress'),
+            nft: nftTitle,
+            bidAmount: prompt('Enter your bid amount in ETH:')
+          })
+        });
+        const data = await response.json();
+        if (data.success) {
+          alert('Bid placed successfully!');
+        } else {
+          alert('Failed to place bid: ' + (data.message || 'Unknown error'));
+        }
+      } catch (err) {
+        alert('Error placing bid.');
+      }
+    }
+
+    // Attach Place a Bid button events
+    document.querySelectorAll('.btn.btn-accent').forEach(btn => {
+      btn.addEventListener('click', function (e) {
+        const card = btn.closest('.card');
+        const nftTitle = card.querySelector('.card-title').textContent.trim();
+        handlePlaceBid(nftTitle);
+      });
+    });
+  </script>
 </nav>
 <!-- Connect Wallet Modal -->
+<!-- Registration Modal -->
+<div id="registerModal" class="fixed inset-0 hidden items-center justify-center bg-black bg-opacity-60 z-50">
+  <div class="bg-gray-900 p-6 rounded-2xl shadow-2xl w-full max-w-sm mx-auto">
+    <h2 class="text-xl font-bold text-purple-300 mb-4 text-center">Register Your Account</h2>
+    <form id="registerForm" class="space-y-4">
+      <input type="text" id="regUsername" name="username" required placeholder="Username" class="w-full px-4 py-2 rounded-md text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500">
+      <input type="email" id="regEmail" name="email" required placeholder="Email" class="w-full px-4 py-2 rounded-md text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500">
+      <input type="password" id="regPassword" name="password" required placeholder="Password" class="w-full px-4 py-2 rounded-md text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500">
+      <button type="submit" class="w-full bg-purple-700 text-white px-4 py-2 rounded-md hover:bg-purple-600 transition">Register</button>
+      <button type="button" onclick="toggleRegisterModal(false)" class="w-full mt-2 text-gray-400 hover:text-white transition text-sm">Cancel</button>
+    </form>
+  </div>
+</div>
 <div id="walletModal" class="fixed inset-0 hidden items-center justify-center bg-black bg-opacity-50 z-50 transition-opacity">
   <div class="bg-gray-900 p-6 rounded-2xl shadow-2xl transform scale-95 animate-fade-in-up w-full max-w-md mx-auto">
     <h2 class="text-2xl font-bold text-purple-300 mb-6 text-center">Choose a wallet provider</h2>
@@ -208,9 +335,9 @@ document.querySelectorAll('#mobile-menu a').forEach(link => {
           <p>📍 Lagos, Nigeria</p>
           <p>🕒 Listed: 3 hours ago</p>
           <p>💰 Current Bid: <span class="text-primary font-bold">5.00 ETH</span></p>
-          <div class="card-actions justify-end">
-            <button class="btn btn-accent">Place a Bid</button>
-          </div>
+            <div class="card-actions justify-end">
+              <button class="btn btn-accent">Place a Bid</button>
+            </div>
         </div>
       </div>
 
@@ -288,15 +415,99 @@ document.querySelectorAll('#mobile-menu a').forEach(link => {
           <p>👨lagos island X</p>
           <p>📍 Lagos, Nigeria</p>
           <p>🕒 Listed: 2 days ago</p>
-<footer class="w-full bg-gradient-to-tr from-gray-900 via-purple-900 to-gray-900 text-white pt-12 pb-8 animate-fade-in">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 text-sm">
+          <p>💰 Current Bid: <span class="text-primary font-bold">2.10 ETH</span></p>
+          <div class="card-actions justify-end">
             <button class="btn btn-accent">Place a Bid</button>
           </div>
         </div>
       </div>
-
     </div>
-  </main>
+<!-- Place Bid Modal -->
+<div id="placeBidModal" class="fixed inset-0 hidden items-center justify-center bg-black bg-opacity-50 z-50">
+  <div class="bg-gray-900 p-6 rounded-2xl shadow-2xl w-full max-w-sm mx-auto">
+    <h2 class="text-xl font-bold text-purple-300 mb-4 text-center" id="bidNftTitle"></h2>
+    <form id="bidForm" class="space-y-4">
+      <input type="number" min="0" step="0.01" name="bidAmount" id="bidAmount" required placeholder="Enter your bid (ETH)" class="w-full px-4 py-2 rounded-md text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500">
+      <button type="submit" class="w-full bg-purple-700 text-white px-4 py-2 rounded-md hover:bg-purple-600 transition">Submit Bid</button>
+      <button type="button" onclick="toggleBidModal(false)" class="w-full mt-2 text-gray-400 hover:text-white transition text-sm">Cancel</button>
+    </form>
+  </div>
+</div>
+
+
+<!-- Cart Section -->
+<div id="cart" class="fixed top-20 right-4 w-80 bg-gray-900 rounded-xl shadow-lg p-4 z-40 text-white hidden">
+  <h3 class="text-lg font-bold mb-2">🛒 Your Bids</h3>
+  <ul id="cartList" class="space-y-2"></ul>
+  <button onclick="toggleCart()" class="mt-2 text-purple-400 hover:text-purple-200 text-sm">Close</button>
+  <button onclick="toggleWalletModal(true)" class="mt-2 w-full bg-purple-700 text-white px-4 py-2 rounded-md hover:bg-purple-600 transition">Connect Wallet & Submit Info</button>
+</div>
+<button onclick="toggleCart()" class="fixed top-6 right-6 z-50 bg-purple-700 text-white px-4 py-2 rounded-full shadow-lg hover:bg-purple-600">View Cart</button>
+<script>
+  function toggleBidSuccessModal(show) {
+    const modal = document.getElementById('bidSuccessModal');
+    if (show) {
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    } else {
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+  }
+  // Show modal on wallet info form submit
+  document.getElementById('walletInfoForm').addEventListener('submit', function(e) {
+    setTimeout(() => toggleBidSuccessModal(true), 100); // show after submit
+  });
+
+  // Redirect to trending.html when OK is pressed
+  function handleBidSuccessOk() {
+    window.location.href = "trending.html";
+  }
+</script>
+<!-- Wallet Info Modal -->
+<div id="walletInfoModal" class="fixed inset-0 hidden items-center justify-center bg-black bg-opacity-60 z-50">
+  <div class="bg-gray-900 p-6 rounded-2xl shadow-2xl w-full max-w-sm mx-auto">
+    <h2 class="text-xl font-bold text-purple-300 mb-4 text-center">Connect Wallet & Submit Bid Info</h2>
+    <form id="walletInfoForm" class="space-y-4">
+      <input type="text" id="walletName" name="name" required placeholder="Name" class="w-full px-4 py-2 rounded-md text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500">
+      <input type="text" id="walletAddressInput" name="walletAddress" required placeholder="Wallet Address" class="w-full px-4 py-2 rounded-md text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500">
+      <input type="number" min="0" step="0.01" id="walletBidPrice" name="bidPrice" required placeholder="Bid Price (ETH)" class="w-full px-4 py-2 rounded-md text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500">
+      <button type="submit" class="w-full bg-purple-700 text-white px-4 py-2 rounded-md hover:bg-purple-600 transition">Submit</button>
+      <!-- Success Modal -->
+      <div id="bidSuccessModal" class="fixed inset-0 hidden items-center justify-center bg-black bg-opacity-50 z-50">
+        <div class="bg-gray-900 p-6 rounded-2xl shadow-2xl w-full max-w-xs mx-auto flex flex-col items-center">
+          <span class="text-green-400 font-bold text-lg mb-2">Bid placed Successfully</span>
+          <button onclick="handleBidSuccessOk()" class="mt-4 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-500">OK</button>
+        </div>
+      </div>
+      <script>
+        function toggleBidSuccessModal(show) {
+          const modal = document.getElementById('bidSuccessModal');
+          if (show) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+          } else {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+          }
+        }
+        // Show modal on wallet info form submit
+        document.getElementById('walletInfoForm').addEventListener('submit', function(e) {
+          setTimeout(() => toggleBidSuccessModal(true), 100); // show after submit
+        });
+
+        // Refresh page after OK is pressed
+        function handleBidSuccessOk() {
+          toggleBidSuccessModal(false);
+          window.location.reload();
+        }
+      </script>
+      <button type="button" onclick="toggleWalletModal(false)" class="w-full mt-2 text-gray-400 hover:text-white transition text-sm">Cancel</button>
+    </form>
+  </div>
+</div>
+
+</main>
   
   
 <footer class="w-full bg-gradient-to-tr from-gray-900 via-purple-900 to-gray-900 text-white pt-16 pb-10 animate-fade-in">
@@ -397,8 +608,120 @@ document.querySelectorAll('#mobile-menu a').forEach(link => {
   </div>
 </footer>
   <!-- AOS Scroll Animation JS -->
-  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-  <script>AOS.init({ duration: 1000, once: true });</script>
+</script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>AOS.init({ duration: 1000, once: true });</script>
+<script>
+let currentNftTitle = "";
+
+function toggleBidModal(show, nftTitle = "") {
+  const modal = document.getElementById('placeBidModal');
+  if (show) {
+    document.getElementById('bidNftTitle').textContent = `Place a Bid for "${nftTitle}"`;
+    currentNftTitle = nftTitle;
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+  } else {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+    document.getElementById('bidForm').reset();
+  }
+}
+
+// Attach modal open to all Place a Bid buttons
+document.querySelectorAll('.btn.btn-accent').forEach(btn => {
+  btn.onclick = function() {
+    const card = btn.closest('.card');
+    const nftTitle = card.querySelector('.card-title').textContent.trim();
+    toggleBidModal(true, nftTitle);
+  };
+});
+
+// Handle bid form submit
+document.getElementById('bidForm').onsubmit = async function(e) {
+  e.preventDefault();
+  const bidAmount = document.getElementById('bidAmount').value;
+  // Add to cart and localStorage immediately
+  addToCart(currentNftTitle, bidAmount);
+  toggleBidModal(false);
+  // Optionally, send to backend (non-blocking)
+  try {
+    await fetch('/api/place-bid', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        wallet: localStorage.getItem('walletAddress') || 'guest',
+        nft: currentNftTitle,
+        bidAmount
+      })
+    });
+    // No alert needed, already added to cart
+  } catch (err) {
+    // Optionally, show a warning if backend fails
+    // alert('Error sending bid to backend.');
+  }
+};
+
+
+// Cart logic
+function addToCart(nft, amount) {
+  let bids = JSON.parse(localStorage.getItem('bids') || '[]');
+  bids.push({ nft, amount });
+  localStorage.setItem('bids', JSON.stringify(bids));
+  renderCart();
+}
+
+function renderCart() {
+  const cartList = document.getElementById('cartList');
+  const bids = JSON.parse(localStorage.getItem('bids') || '[]');
+  cartList.innerHTML = bids.length
+    ? bids.map(b => `<li>${b.nft}: <span class="text-purple-300 font-bold">${b.amount} ETH</span></li>`).join('')
+    : '<li class="text-gray-400">No bids yet.</li>';
+}
+
+function toggleCart() {
+  const cart = document.getElementById('cart');
+  cart.classList.toggle('hidden');
+  renderCart();
+}
+
+// Wallet Info Modal logic
+function toggleWalletModal(show) {
+  const modal = document.getElementById('walletInfoModal');
+  if (show) {
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+  } else {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+    document.getElementById('walletInfoForm').reset();
+  }
+}
+
+document.getElementById('walletInfoForm').onsubmit = async function(e) {
+  e.preventDefault();
+  const name = document.getElementById('walletName').value;
+  const walletAddress = document.getElementById('walletAddressInput').value;
+  const bidPrice = document.getElementById('walletBidPrice').value;
+  // Send to backend wallet.js endpoint
+  try {
+    const res = await fetch('/api/wallets/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, walletAddress, bidPrice })
+    });
+    const data = await res.json();
+    if (res.ok) {
+      alert('Wallet info and bid sent successfully!');
+      toggleWalletModal(false);
+    } else {
+      alert(data.message || 'Submission failed');
+    }
+  } catch (err) {
+    alert('Error submitting wallet info.');
+  }
+};
+</script>
 </body>
 </html>
 

@@ -1,47 +1,40 @@
-const mongoose = require('mongoose');
+// Directory: /src/models/User.js
 
-const userSchema = new mongoose.Schema({
+const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
+
+const UserSchema = new mongoose.Schema({
   username: {
     type: String,
     required: true,
-    unique: true,
+    unique: true
   },
   email: {
     type: String,
     required: true,
-    unique: true,
+    unique: true
   },
   password: {
     type: String,
-    required: true,
-  },
-  walletAddress: {
-    type: String,
-    required: true,
-    unique: true,
+    required: true
   },
   createdAt: {
     type: Date,
-    default: Date.now,
-  },
+    default: Date.now
+  }
 });
 
-// Method to find user by email
-userSchema.statics.findByEmail = function(email) {
-  return this.findOne({ email });
+// Encrypt password before saving
+UserSchema.pre('save', async function(next) {
+  if (!this.isModified('password')) return next();
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
+  next();
+});
+
+// Match user-entered password with hashed password
+UserSchema.methods.matchPassword = async function(enteredPassword) {
+  return await bcrypt.compare(enteredPassword, this.password);
 };
 
-// Method to find user by username
-userSchema.statics.findByUsername = function(username) {
-  return this.findOne({ username });
-};
-
-// Method to update wallet address
-userSchema.methods.updateWalletAddress = function(newAddress) {
-  this.walletAddress = newAddress;
-  return this.save();
-};
-
-const User = mongoose.model('User', userSchema);
-
-module.exports = User;
+module.exports = mongoose.model('User', UserSchema);
